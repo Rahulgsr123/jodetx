@@ -1,0 +1,130 @@
+.reporting-page {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111827;
+  border: 1px solid #dfe5f2;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+}
+
+.empty-state {
+  min-height: calc(100vh - 70px);
+  padding-bottom: 90px;
+}
+
+.empty-text {
+  max-width: 620px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #111827;
+}
+
+.add-btn {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 4px;
+  background: #4087f5;
+  border-color: #4087f5;
+}
+
+.tag-illustration {
+  position: relative;
+  width: 112px;
+  height: 84px;
+}
+
+.paper {
+  position: absolute;
+  left: 34px;
+  top: 2px;
+  width: 48px;
+  height: 62px;
+  background: #ffffff;
+  border: 4px solid #eef1f7;
+  border-radius: 2px;
+  z-index: 2;
+}
+
+.paper::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border-left: 4px solid #eef1f7;
+  border-bottom: 4px solid #eef1f7;
+}
+
+.paper span {
+  display: block;
+  height: 3px;
+  background: #c7ccd7;
+  border-radius: 10px;
+  margin-left: 8px;
+}
+
+.paper span:nth-child(1) {
+  margin-top: 15px;
+}
+
+.paper span:nth-child(2),
+.paper span:nth-child(3) {
+  margin-top: 9px;
+}
+
+.tag-shape {
+  position: absolute;
+  left: 78px;
+  top: 19px;
+  width: 20px;
+  height: 20px;
+  background: #4d8df7;
+  border-radius: 4px 4px 4px 1px;
+  transform: rotate(45deg);
+  z-index: 1;
+}
+
+.tag-shape::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 5px;
+  height: 5px;
+  background: #cfe0ff;
+  border-radius: 50%;
+}
+
+.paper-shadow {
+  position: absolute;
+  left: 8px;
+  bottom: 0;
+  width: 96px;
+  height: 40px;
+  background: #f3f4f8;
+  border-radius: 12px 12px 8px 8px;
+  transform: skewX(-14deg);
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .reporting-page {
+    border-radius: 0;
+  }
+
+  .empty-state {
+    min-height: calc(100vh - 64px);
+    padding-bottom: 60px;
+  }
+
+  .empty-text {
+    font-size: 13px;
+  }
+
+  .add-btn {
+    font-size: 13px;
+  }
+}

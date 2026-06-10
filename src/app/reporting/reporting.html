@@ -1,0 +1,59 @@
+<section class="reporting-page bg-white min-vh-100">
+  <div class="border-bottom px-4 py-3">
+    <h4 class="mb-0 fw-semibold text-dark">
+      {{ pageData.title }}
+    </h4>
+  </div>
+
+  <ng-container *ngIf="hasTags; else emptyState">
+    <div
+      *ngFor="let tag of pageData.tags; trackBy: trackByTag"
+      class="row g-0 align-items-center border-bottom px-4 py-3"
+    >
+      <div class="col-4 fw-semibold">
+        {{ tag.name }}
+      </div>
+
+      <div class="col-4 text-muted">
+        {{ tag.type }}
+      </div>
+
+      <div class="col-4">
+        <span class="badge rounded-pill text-bg-success">
+          {{ tag.status }}
+        </span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyState>
+    <div class="empty-state d-flex flex-column align-items-center justify-content-center text-center px-3">
+      <div class="tag-illustration mb-4">
+        <div class="paper">
+          <span
+            *ngFor="let line of pageData.emptyState.illustration.paperLines; trackBy: trackByPaperLine"
+            [style.width]="line.width"
+          ></span>
+        </div>
+
+        <div class="tag-shape"></div>
+        <div class="paper-shadow"></div>
+      </div>
+
+      <p
+        *ngFor="let line of pageData.emptyState.lines; trackBy: trackByLine"
+        class="empty-text mb-1"
+      >
+        {{ line.text }}
+      </p>
+
+      <button
+        type="button"
+        class="btn btn-primary add-btn mt-4"
+        [routerLink]="pageData.emptyState.button.route"
+      >
+        {{ pageData.emptyState.button.label }}
+      </button>
+    </div>
+  </ng-template>
+</section>

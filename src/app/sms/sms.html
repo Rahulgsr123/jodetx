@@ -1,0 +1,111 @@
+<section class="sms-page bg-white min-vh-100">
+  <div class="border-bottom px-4 py-3">
+    <h5 class="mb-0 fw-semibold text-dark">
+      {{ pageData.title }}
+    </h5>
+  </div>
+
+  <div class="px-4 py-4 sms-content">
+    <section
+      *ngFor="let section of pageData.sections; trackBy: trackBySection"
+      class="mb-5"
+    >
+      <h6 class="fw-semibold mb-3 text-dark">
+        {{ section.title }}
+      </h6>
+
+      <div
+        *ngFor="let card of section.cards; trackBy: trackByCard"
+        class="card sms-card mb-3"
+      >
+        <div class="card-body p-0">
+          <div class="d-flex align-items-center p-3">
+            <div
+              class="sms-logo-box me-4 d-flex align-items-center justify-content-center"
+              [ngClass]="card.logoType + '-box'"
+            >
+              <ng-container [ngSwitch]="card.logoType">
+                <i
+                  *ngSwitchCase="'wallet'"
+                  class="bi bi-wallet2 sms-main-icon"
+                ></i>
+
+                <span *ngSwitchCase="'twilio'" class="twilio-logo">
+                  <span class="twilio-mark">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </span>
+                  <span>twilio</span>
+                </span>
+              </ng-container>
+            </div>
+
+            <div class="flex-grow-1">
+              <h6 class="mb-2 fw-semibold">
+                {{ card.title }}
+              </h6>
+
+              <p class="mb-0 sms-desc">
+                {{ card.description }}
+              </p>
+
+              <button
+                *ngIf="card.infoButton"
+                type="button"
+                class="btn btn-light border sms-info-btn mt-3"
+                (click)="handleAction(card.infoButton.action)"
+              >
+                {{ card.infoButton.label }}
+              </button>
+
+              <button
+                *ngIf="card.button"
+                type="button"
+                class="btn sms-action-btn mt-3"
+                [ngClass]="{
+                  'btn-primary': card.button.style === 'primary',
+                  'btn-light sms-muted-btn': card.button.style === 'muted',
+                  'btn-light border': card.button.style === 'light'
+                }"
+                (click)="handleAction(card.button.action)"
+              >
+                {{ card.button.label }}
+              </button>
+            </div>
+          </div>
+
+          <div
+            *ngFor="let row of card.rows; trackBy: trackByRow"
+            class="border-top px-3 py-3 d-flex align-items-center justify-content-between gap-3"
+          >
+            <div>
+              <span *ngIf="row.badge" class="badge free-badge mb-2">
+                {{ row.badge }}
+              </span>
+
+              <p class="mb-0 sms-small-text">
+                {{ row.text }}
+              </p>
+            </div>
+
+            <button
+              *ngIf="row.button"
+              type="button"
+              class="btn sms-action-btn"
+              [ngClass]="{
+                'btn-primary': row.button.style === 'primary',
+                'btn-light sms-muted-btn': row.button.style === 'muted',
+                'btn-light border': row.button.style === 'light'
+              }"
+              (click)="handleAction(row.button.action)"
+            >
+              {{ row.button.label }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

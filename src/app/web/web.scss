@@ -1,0 +1,81 @@
+.web-tabs-page {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111827;
+  border: 1px solid #dfe5f2;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+}
+
+.add-btn {
+  height: 34px;
+  padding: 0 13px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.table-header {
+  color: #4b5d86;
+}
+
+.table-header .small {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.table-row {
+  min-height: 58px;
+  font-size: 14px;
+}
+
+.empty-state {
+  min-height: calc(100vh - 92px);
+  padding-bottom: 120px;
+}
+
+.empty-text {
+  color: #68759a;
+  font-size: 14px;
+}
+
+.create-btn {
+  height: 44px;
+  min-width: 160px;
+  padding: 0 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 5px;
+  background: #4087f5;
+  border-color: #4087f5;
+}
+
+.learn-text {
+  font-size: 14px;
+  color: #111827;
+}
+
+@media (max-width: 768px) {
+  .web-tabs-page {
+    border-radius: 0;
+  }
+
+  .table-header {
+    display: none;
+  }
+
+  .table-row {
+    display: block;
+    padding: 12px 0;
+  }
+
+  .table-row > div {
+    width: 100%;
+    max-width: 100%;
+    padding: 4px 16px !important;
+  }
+
+  .empty-state {
+    min-height: calc(100vh - 74px);
+    padding: 80px 16px;
+  }
+}

@@ -1,0 +1,138 @@
+.sms-page {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111827;
+}
+
+.sms-content {
+  max-width: 880px;
+}
+
+.sms-card {
+  border: 1px solid #e1e5ee;
+  border-radius: 7px;
+  box-shadow: none;
+}
+
+.sms-logo-box {
+  width: 108px;
+  height: 100px;
+  flex: 0 0 108px;
+  background: #f8f8f8;
+  border-radius: 4px;
+}
+
+.sms-main-icon {
+  font-size: 38px;
+  color: #2676a7;
+}
+
+.sms-desc,
+.sms-small-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #111827;
+}
+
+.sms-info-btn {
+  width: 30px;
+  height: 27px;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.free-badge {
+  background: #ff5a1f;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 2px;
+  padding: 3px 6px;
+}
+
+.sms-action-btn {
+  height: 30px;
+  padding: 0 13px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.sms-muted-btn {
+  color: #4a78e8;
+  background: #eef3ff;
+  border: none;
+}
+
+.twilio-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #ff2f57;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.twilio-mark {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ff2f57;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.twilio-mark span {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #ff2f57;
+  border-radius: 50%;
+}
+
+.twilio-mark span:nth-child(1) {
+  left: 5px;
+  top: 5px;
+}
+
+.twilio-mark span:nth-child(2) {
+  right: 5px;
+  top: 5px;
+}
+
+.twilio-mark span:nth-child(3) {
+  left: 5px;
+  bottom: 5px;
+}
+
+.twilio-mark span:nth-child(4) {
+  right: 5px;
+  bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .sms-content {
+    max-width: 100%;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .sms-logo-box {
+    width: 82px;
+    height: 82px;
+    flex-basis: 82px;
+    margin-right: 14px !important;
+  }
+
+  .sms-desc,
+  .sms-small-text {
+    font-size: 11px;
+  }
+
+  .border-top {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+}

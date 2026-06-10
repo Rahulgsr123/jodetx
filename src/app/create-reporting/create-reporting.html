@@ -1,0 +1,216 @@
+<section class="reporting-page bg-light min-vh-100">
+  <div class="container-fluid px-3 px-lg-4 py-3">
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+      <div class="steps-bar bg-white border-bottom px-3 px-lg-4 py-3">
+        <div class="d-flex align-items-center justify-content-center gap-4 gap-lg-5">
+          @for (step of pageData.steps; track step.id) {
+            <div class="d-flex align-items-center gap-2 step-item"
+                 [class.text-primary]="step.active"
+                 [class.text-muted]="!step.active">
+              <span class="step-circle d-inline-flex align-items-center justify-content-center rounded-circle"
+                    [class.bg-primary]="step.active"
+                    [class.text-white]="step.active"
+                    [class.bg-white]="!step.active"
+                    [class.border]="!step.active">
+                {{ step.id }}
+              </span>
+              <span class="fw-semibold small">{{ step.label }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="card-body p-3 p-lg-4">
+
+        @if (submitted()) {
+          <div class="alert validation-alert border-0 rounded-3 d-flex justify-content-between align-items-start mb-4">
+            <ul class="mb-0 ps-3">
+              @for (point of pageData.alert.points; track point) {
+                <li>{{ point }}</li>
+              }
+            </ul>
+
+            @if (pageData.alert.closable) {
+              <button type="button"
+                      class="btn-close alert-close shadow-none"
+                      aria-label="Close"
+                      (click)="hideAlert()">
+              </button>
+            }
+          </div>
+        }
+
+        <form class="reporting-form" novalidate>
+
+          <div class="row gy-3 mb-4">
+            @for (field of pageData.fields; track field.id) {
+              <div class="col-12">
+                <div class="row align-items-start">
+                  <label class="col-md-2 col-form-label small fw-medium"
+                         [class.text-danger]="field.required">
+                    {{ field.label }}@if (field.required) {<span>*</span>}
+                  </label>
+
+                  <div class="col-md-4 col-lg-4">
+                    @if (field.type === 'text') {
+                      <input type="text"
+                             class="form-control form-control-sm shadow-none"
+                             [(ngModel)]="field.value"
+                             [name]="field.id"
+                             [class.is-invalid]="submitted() && field.required && !field.value.trim()" />
+                    }
+
+                    @if (field.type === 'textarea') {
+                      <textarea class="form-control form-control-sm shadow-none"
+                                [(ngModel)]="field.value"
+                                [name]="field.id"
+                                [rows]="field.rows || 3">
+                      </textarea>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+
+          <hr class="my-4" />
+
+          <div class="mb-3">
+            <h6 class="fw-semibold mb-1">{{ pageData.association.title }}</h6>
+            <p class="text-muted small mb-0">{{ pageData.association.description }}</p>
+          </div>
+
+          <div class="modules-wrapper">
+
+            @for (group of pageData.moduleGroups; track group.id) {
+              <div class="module-card border rounded-3 overflow-hidden mb-3 bg-white">
+                <div class="row g-0">
+
+                  <div class="col-md-3 border-end module-left p-3">
+                    @if (group.children?.length) {
+                      @for (child of group.children; track child) {
+                        <div class="form-check mb-2">
+                          <input class="form-check-input shadow-none"
+                                 type="checkbox"
+                                 [checked]="isChildChecked(group.id, child)"
+                                 (change)="toggleChild(group.id, child, $event)"
+                                 [id]="group.id + child" />
+
+                          <label class="form-check-label small" [for]="group.id + child">
+                            {{ child }}
+                          </label>
+                        </div>
+                      }
+                    } @else {
+                      <div class="form-check">
+                        <input class="form-check-input shadow-none"
+                               type="checkbox"
+                               [(ngModel)]="group.checked"
+                               [name]="group.id"
+                               [id]="group.id" />
+
+                        <label class="form-check-label small" [for]="group.id">
+                          {{ group.title }}
+                        </label>
+                      </div>
+                    }
+                  </div>
+
+                  <div class="col-md-9 p-3">
+                    @if (group.infoBox?.length) {
+                      <div class="info-box rounded-3 p-3 mb-3">
+                        <ul class="mb-0 ps-3">
+                          @for (info of group.infoBox; track info) {
+                            <li class="small">{{ info }}</li>
+                          }
+                        </ul>
+                      </div>
+                    }
+
+                    @for (option of group.options; track option.id) {
+                      <div class="form-check mb-3 option-row">
+                        <input class="form-check-input shadow-none"
+                               type="radio"
+                               [(ngModel)]="group.selectedOption"
+                               [name]="group.id + '-option'"
+                               [value]="option.id"
+                               [id]="group.id + option.id" />
+
+                        <label class="form-check-label w-100" [for]="group.id + option.id">
+                          <span class="d-block small fw-semibold text-dark">{{ option.label }}</span>
+                          <span class="d-block small text-muted">{{ option.description }}</span>
+                        </label>
+                      </div>
+                    }
+                  </div>
+
+                </div>
+              </div>
+            }
+
+            <div class="simple-modules mb-4">
+              @for (item of pageData.simpleModules; track item.id) {
+                <div class="form-check mb-2">
+                  <input class="form-check-input shadow-none"
+                         type="checkbox"
+                         [(ngModel)]="item.checked"
+                         [name]="item.id"
+                         [id]="item.id" />
+
+                  <label class="form-check-label small" [for]="item.id">
+                    {{ item.label }}
+                  </label>
+                </div>
+              }
+            </div>
+
+          </div>
+
+          <hr class="my-4" />
+
+          <div class="configurations mb-4">
+            <h6 class="fw-semibold mb-3">{{ pageData.configurations.title }}</h6>
+
+            @for (config of pageData.configurations.items; track config.id) {
+              <div class="form-check">
+                <input class="form-check-input shadow-none"
+                       type="checkbox"
+                       [(ngModel)]="config.checked"
+                       [name]="config.id"
+                       [id]="config.id" />
+
+                <label class="form-check-label small fw-medium" [for]="config.id">
+                  {{ config.label }}
+                </label>
+
+                <p class="text-muted small mb-0 ms-4 mt-1">
+                  {{ config.description }}
+                </p>
+              </div>
+            }
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="action-bar bg-white border-top shadow-sm">
+    <div class="container-fluid px-3 px-lg-4 py-2">
+      <button type="button"
+              class="btn btn-primary btn-sm px-3 me-2"
+              (click)="onSubmit()">
+        {{ pageData.actions.primary }}
+      </button>
+
+      <button type="button"
+              class="btn btn-light btn-sm border px-3"
+              (click)="onCancel()">
+        {{ pageData.actions.secondary }}
+      </button>
+    </div>
+  </div>
+</section>
