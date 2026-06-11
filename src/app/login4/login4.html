@@ -1,0 +1,421 @@
+<section class="acx-shell">
+  <div class="acx-bg-orb acx-bg-orb-one" aria-hidden="true"></div>
+  <div class="acx-bg-orb acx-bg-orb-two" aria-hidden="true"></div>
+  <div class="acx-bg-grid" aria-hidden="true"></div>
+
+  <div class="acx-leaf acx-leaf-left" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="acx-leaf acx-leaf-right" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="acx-wave acx-wave-back" aria-hidden="true"></div>
+  <div class="acx-wave acx-wave-front" aria-hidden="true"></div>
+
+  <div class="container-fluid min-vh-100 position-relative" style="z-index: 2">
+    <div class="row g-0 min-vh-100 align-items-center justify-content-center">
+      <div class="col-12 d-flex align-items-center justify-content-center px-3 px-sm-4 py-4">
+        <div class="acx-auth-wrap">
+          <div class="acx-brand-top text-center">
+            <!-- <div class="acx-brand-mark mx-auto" aria-hidden="true">
+              {{ pageData.brand.logoText }}
+            </div> -->
+            <div class="acx-company mt-3">{{ pageData.brand.company }}</div>
+            <div class="acx-product-name">{{ pageData.brand.product }}</div>
+          </div>
+
+          <div class="acx-form-card">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <span class="acx-product-badge">
+                <i class="bi bi-stars" aria-hidden="true"></i>
+                {{ pageData.brand.product }}
+              </span>
+
+              @if (authMode() === 'register') {
+                <div class="acx-stepdots" aria-label="Registration progress">
+                  @for (step of stepDots; track step) {
+                    <span [class.is-active]="step <= stepIndex()"></span>
+                  }
+                </div>
+              }
+            </div>
+
+            <h2 class="acx-form-title mb-2">{{ currentForm().title }}</h2>
+            <p class="acx-form-sub mb-4">{{ currentForm().subtitle }}</p>
+
+            @if (authMode() === 'login') {
+              <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" novalidate>
+                <div class="mb-3">
+                  <label for="acx-phone-login" class="acx-form-label d-block">
+                    {{ currentForm().fields['phone'].label }}
+                  </label>
+
+                  <div class="acx-input-group">
+                    <i
+                      class="bi acx-input-icon"
+                      [ngClass]="currentForm().fields['phone'].icon"
+                      aria-hidden="true"
+                    ></i>
+
+                    <input
+                      id="acx-phone-login"
+                      type="tel"
+                      inputmode="numeric"
+                      maxlength="10"
+                      autocomplete="tel"
+                      class="form-control"
+                      formControlName="phone"
+                      [placeholder]="currentForm().fields['phone'].placeholder"
+                      [attr.aria-invalid]="!!getPhoneError(loginForm.get('phone'))"
+                      (input)="cleanNumberInput('phone', 'login')"
+                    />
+                  </div>
+
+                  @if (getPhoneError(loginForm.get('phone'))) {
+                    <div class="acx-error" role="alert">
+                      <i class="bi bi-exclamation-circle"></i>
+                      {{ getPhoneError(loginForm.get('phone')) }}
+                    </div>
+                  }
+                </div>
+
+                <div class="mb-3">
+                  <label for="acx-pin-login" class="acx-form-label d-block">
+                    {{ currentForm().fields['pin'].label }}
+                  </label>
+
+                  <div class="acx-input-group">
+                    <i
+                      class="bi acx-input-icon"
+                      [ngClass]="currentForm().fields['pin'].icon"
+                      aria-hidden="true"
+                    ></i>
+
+                    <input
+                      id="acx-pin-login"
+                      [type]="showPin() ? 'text' : 'password'"
+                      inputmode="numeric"
+                      maxlength="6"
+                      autocomplete="current-password"
+                      class="form-control"
+                      formControlName="pin"
+                      [placeholder]="currentForm().fields['pin'].placeholder"
+                      [attr.aria-invalid]="!!getPinError(loginForm.get('pin'))"
+                      (input)="cleanNumberInput('pin', 'login')"
+                    />
+
+                    <button
+                      type="button"
+                      class="acx-toggle-eye"
+                      [attr.aria-label]="showPin() ? 'Hide PIN' : 'Show PIN'"
+                      (click)="togglePin()"
+                    >
+                      <i class="bi" [ngClass]="showPin() ? 'bi-eye-slash' : 'bi-eye'"></i>
+                    </button>
+                  </div>
+
+                  @if (getPinError(loginForm.get('pin'))) {
+                    <div class="acx-error" role="alert">
+                      <i class="bi bi-exclamation-circle"></i>
+                      {{ getPinError(loginForm.get('pin')) }}
+                    </div>
+                  }
+                </div>
+
+                @if (info()) {
+                  <div class="acx-info mb-3" role="status">
+                    <i class="bi bi-check2-circle"></i>
+                    {{ info() }}
+                  </div>
+                }
+
+                <button type="submit" class="acx-btn-primary mt-2" [disabled]="loading()">
+                  @if (loading()) {
+                    <span class="acx-spinner" aria-hidden="true"></span>
+                    {{ currentForm().loadingCta }}
+                  } @else {
+                    <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
+                    {{ currentForm().primaryCta }}
+                  }
+                </button>
+
+                @if (currentForm().secondary) {
+                  <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
+                    @for (secondary of currentForm().secondary; track secondary.action) {
+                      <div class="d-inline-flex align-items-center gap-1">
+                        @if (secondary.text) {
+                          <span class="acx-muted-text">{{ secondary.text }}</span>
+                        }
+                        <button
+                          type="button"
+                          class="acx-link-btn"
+                          (click)="handleSecondaryAction(secondary.action)"
+                        >
+                          {{ secondary.linkText }}
+                        </button>
+                      </div>
+                    }
+                  </div>
+                }
+              </form>
+            }
+
+            @if (authMode() === 'register' && registerStep() === 'phone') {
+              <form [formGroup]="registerPhoneForm" (ngSubmit)="generateOtp()" novalidate>
+                <div class="mb-3">
+                  <label for="acx-phone-register" class="acx-form-label d-block">
+                    {{ currentForm().fields['phone'].label }}
+                  </label>
+
+                  <div class="acx-input-group">
+                    <i
+                      class="bi acx-input-icon"
+                      [ngClass]="currentForm().fields['phone'].icon"
+                      aria-hidden="true"
+                    ></i>
+
+                    <input
+                      id="acx-phone-register"
+                      type="tel"
+                      inputmode="numeric"
+                      maxlength="10"
+                      autocomplete="tel"
+                      class="form-control"
+                      formControlName="phone"
+                      [placeholder]="currentForm().fields['phone'].placeholder"
+                      [attr.aria-invalid]="!!getPhoneError(registerPhoneForm.get('phone'))"
+                      (input)="cleanNumberInput('phone', 'registerPhone')"
+                    />
+                  </div>
+
+                  @if (getPhoneError(registerPhoneForm.get('phone'))) {
+                    <div class="acx-error" role="alert">
+                      <i class="bi bi-exclamation-circle"></i>
+                      {{ getPhoneError(registerPhoneForm.get('phone')) }}
+                    </div>
+                  }
+                </div>
+
+                @if (info()) {
+                  <div class="acx-info mb-3" role="status">
+                    <i class="bi bi-check2-circle"></i>
+                    {{ info() }}
+                  </div>
+                }
+
+                <button type="submit" class="acx-btn-primary mt-2" [disabled]="loading()">
+                  @if (loading()) {
+                    <span class="acx-spinner" aria-hidden="true"></span>
+                    {{ currentForm().loadingCta }}
+                  } @else {
+                    <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
+                    {{ currentForm().primaryCta }}
+                  }
+                </button>
+
+                <div class="text-center mt-3">
+                  <button type="button" class="acx-link-btn" (click)="switchToLogin()">
+                    <i class="bi bi-arrow-left me-1"></i>
+                    {{ currentForm().backText }}
+                  </button>
+                </div>
+              </form>
+            }
+
+            @if (authMode() === 'register' && registerStep() === 'otp') {
+              <form [formGroup]="otpForm" (ngSubmit)="verifyOtp()" novalidate>
+                <div class="mb-3">
+                  <label for="acx-otp" class="acx-form-label d-block">
+                    {{ currentForm().fields['otp'].label }}
+                  </label>
+
+                  <div class="acx-input-group">
+                    <i
+                      class="bi acx-input-icon"
+                      [ngClass]="currentForm().fields['otp'].icon"
+                      aria-hidden="true"
+                    ></i>
+
+                    <input
+                      id="acx-otp"
+                      type="text"
+                      inputmode="numeric"
+                      maxlength="6"
+                      autocomplete="one-time-code"
+                      class="form-control"
+                      formControlName="otp"
+                      [placeholder]="currentForm().fields['otp'].placeholder"
+                      [attr.aria-invalid]="!!getOtpError(otpForm.get('otp'))"
+                      (input)="cleanNumberInput('otp', 'otp')"
+                    />
+                  </div>
+
+                  @if (getOtpError(otpForm.get('otp'))) {
+                    <div class="acx-error" role="alert">
+                      <i class="bi bi-exclamation-circle"></i>
+                      {{ getOtpError(otpForm.get('otp')) }}
+                    </div>
+                  }
+
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                    <button type="button" class="acx-back-btn" (click)="handleBack()">
+                      <i class="bi bi-arrow-left"></i>
+                      {{ currentForm().backText }}
+                    </button>
+
+                    <button type="button" class="acx-link-btn" (click)="resendOtp()">
+                      <i class="bi bi-arrow-clockwise me-1"></i>
+                      {{ currentForm().resendText }}
+                    </button>
+                  </div>
+                </div>
+
+                @if (info()) {
+                  <div class="acx-info mb-3" role="status">
+                    <i class="bi bi-check2-circle"></i>
+                    {{ info() }}
+                  </div>
+                }
+
+                <button type="submit" class="acx-btn-primary mt-2" [disabled]="loading()">
+                  @if (loading()) {
+                    <span class="acx-spinner" aria-hidden="true"></span>
+                    {{ currentForm().loadingCta }}
+                  } @else {
+                    <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
+                    {{ currentForm().primaryCta }}
+                  }
+                </button>
+              </form>
+            }
+
+            @if (authMode() === 'register' && registerStep() === 'pin') {
+              <form [formGroup]="pinForm" (ngSubmit)="completeRegistration()" novalidate>
+                <div class="mb-3">
+                  <label for="acx-pin-register" class="acx-form-label d-block">
+                    {{ currentForm().fields['pin'].label }}
+                  </label>
+
+                  <div class="acx-input-group">
+                    <i
+                      class="bi acx-input-icon"
+                      [ngClass]="currentForm().fields['pin'].icon"
+                      aria-hidden="true"
+                    ></i>
+
+                    <input
+                      id="acx-pin-register"
+                      [type]="showPin() ? 'text' : 'password'"
+                      inputmode="numeric"
+                      maxlength="6"
+                      autocomplete="new-password"
+                      class="form-control"
+                      formControlName="pin"
+                      [placeholder]="currentForm().fields['pin'].placeholder"
+                      [attr.aria-invalid]="!!getPinError(pinForm.get('pin'))"
+                      (input)="cleanNumberInput('pin', 'pin')"
+                    />
+
+                    <button
+                      type="button"
+                      class="acx-toggle-eye"
+                      [attr.aria-label]="showPin() ? 'Hide PIN' : 'Show PIN'"
+                      (click)="togglePin()"
+                    >
+                      <i class="bi" [ngClass]="showPin() ? 'bi-eye-slash' : 'bi-eye'"></i>
+                    </button>
+                  </div>
+
+                  @if (getPinError(pinForm.get('pin'))) {
+                    <div class="acx-error" role="alert">
+                      <i class="bi bi-exclamation-circle"></i>
+                      {{ getPinError(pinForm.get('pin')) }}
+                    </div>
+                  }
+                </div>
+
+                <div class="mb-3">
+                  <label for="acx-confirm-pin" class="acx-form-label d-block">
+                    {{ currentForm().fields['confirmPin'].label }}
+                  </label>
+
+                  <div class="acx-input-group">
+                    <i
+                      class="bi acx-input-icon"
+                      [ngClass]="currentForm().fields['confirmPin'].icon"
+                      aria-hidden="true"
+                    ></i>
+
+                    <input
+                      id="acx-confirm-pin"
+                      [type]="showConfirmPin() ? 'text' : 'password'"
+                      inputmode="numeric"
+                      maxlength="6"
+                      autocomplete="new-password"
+                      class="form-control"
+                      formControlName="confirmPin"
+                      [placeholder]="currentForm().fields['confirmPin'].placeholder"
+                      [attr.aria-invalid]="!!getConfirmPinError()"
+                      (input)="cleanNumberInput('confirmPin', 'pin')"
+                    />
+
+                    <button
+                      type="button"
+                      class="acx-toggle-eye"
+                      [attr.aria-label]="showConfirmPin() ? 'Hide PIN' : 'Show PIN'"
+                      (click)="toggleConfirmPin()"
+                    >
+                      <i class="bi" [ngClass]="showConfirmPin() ? 'bi-eye-slash' : 'bi-eye'"></i>
+                    </button>
+                  </div>
+
+                  @if (getConfirmPinError()) {
+                    <div class="acx-error" role="alert">
+                      <i class="bi bi-exclamation-circle"></i>
+                      {{ getConfirmPinError() }}
+                    </div>
+                  }
+                </div>
+
+                @if (info()) {
+                  <div class="acx-info mb-3" role="status">
+                    <i class="bi bi-check2-circle"></i>
+                    {{ info() }}
+                  </div>
+                }
+
+                <button type="submit" class="acx-btn-primary mt-2" [disabled]="loading()">
+                  @if (loading()) {
+                    <span class="acx-spinner" aria-hidden="true"></span>
+                    {{ currentForm().loadingCta }}
+                  } @else {
+                    <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
+                    {{ currentForm().primaryCta }}
+                  }
+                </button>
+
+                <div class="text-center mt-3">
+                  <button type="button" class="acx-back-btn" (click)="handleBack()">
+                    <i class="bi bi-arrow-left"></i>
+                    {{ currentForm().backText }}
+                  </button>
+                </div>
+              </form>
+            }
+          </div>
+
+          <div class="acx-footer text-center">
+            <span>{{ pageData.links.footerLeft }}</span>
+            <div>
+              @for (footerLink of pageData.links.footerRight; track footerLink) {
+                <a href="#">{{ footerLink }}</a>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,872 @@
+/* ===========================================================
+   AcquirerX Login Demo — Animated Diagonal Auth Panel
+   Same transition idea as the reference video, but adapted to the
+   AcquirerX brochure theme: navy, purple, cyan, white and premium blue.
+
+   Backend integration is untouched. This SCSS changes UI only.
+   =========================================================== */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.acx-mini-grid{
+    color: #111827;
+}
+
+.acx-shell {
+  --acx-page-bg: #eef3f8;
+  --acx-frame-bg: #071226;
+  --acx-black: #040915;
+  --acx-panel: #090d1b;
+  --acx-panel-soft: #10162b;
+  --acx-navy: #081a3a;
+  --acx-navy-2: #11104a;
+  --acx-purple: #4e1f8f;
+  --acx-purple-2: #7d2ce6;
+  --acx-blue: #1677ff;
+  --acx-sky: #21c7ff;
+  --acx-cyan: #43d7ff;
+  --acx-white: #ffffff;
+  --acx-muted: #9fb1c8;
+  --acx-muted-2: #687b98;
+  --acx-text-dark: #06142b;
+  --acx-border: rgba(91, 165, 255, 0.25);
+  --acx-input-bg: rgba(255, 255, 255, 0.055);
+  --acx-input-border: rgba(255, 255, 255, 0.12);
+
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(33, 199, 255, 0.24), transparent 32%),
+    radial-gradient(circle at 84% 80%, rgba(78, 31, 143, 0.20), transparent 35%),
+    linear-gradient(135deg, #edf4fb 0%, #f7f9fc 45%, #e8eef7 100%);
+  color: var(--acx-white);
+  font-family: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.acx-bg-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(78px);
+  pointer-events: none;
+  opacity: 0.55;
+  animation: acx-orb-drift 16s ease-in-out infinite;
+}
+
+.acx-bg-orb-one {
+  width: 420px;
+  height: 420px;
+  top: -140px;
+  left: -130px;
+  background: rgba(33, 199, 255, 0.34);
+}
+
+.acx-bg-orb-two {
+  width: 520px;
+  height: 520px;
+  right: -180px;
+  bottom: -190px;
+  background: rgba(78, 31, 143, 0.24);
+  animation-delay: -6s;
+}
+
+.acx-auth-frame {
+  position: relative;
+  max-width: min(1180px, calc(100vw - 48px));
+  height: min(690px, calc(100dvh - 56px));
+  min-height: 570px;
+  border-radius: 26px;
+  overflow: hidden;
+  background: var(--acx-frame-bg);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 34px 100px rgba(7, 18, 38, 0.30),
+    0 0 0 1px rgba(12, 78, 130, 0.10),
+    0 0 52px rgba(33, 199, 255, 0.14);
+}
+
+.acx-auth-frame::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(67, 215, 255, 0.28);
+  box-shadow: 0 0 28px rgba(22, 119, 255, 0.12) inset;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Diagonal animated wipe like the reference video. */
+.acx-auth-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(128deg, transparent 0 39%, rgba(6, 12, 25, 0.86) 39.3%, rgba(78, 31, 143, 0.82) 56%, transparent 56.3%),
+    radial-gradient(circle at 76% 18%, rgba(67, 215, 255, 0.26), transparent 40%),
+    radial-gradient(circle at 84% 70%, rgba(125, 44, 230, 0.42), transparent 38%);
+  opacity: 0.95;
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.72s ease;
+}
+
+.acx-shell.is-register .acx-auth-frame::after {
+  transform: scaleX(-1);
+  opacity: 1;
+}
+
+.acx-form-side,
+.acx-visual-side {
+  position: relative;
+  z-index: 3;
+  min-height: 100%;
+  transition:
+    transform 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease;
+  will-change: transform;
+}
+
+.acx-form-side {
+  background:
+    linear-gradient(145deg, rgba(3, 8, 18, 0.96), rgba(10, 14, 33, 0.92)),
+    radial-gradient(circle at 14% 18%, rgba(22, 119, 255, 0.16), transparent 40%);
+  padding: clamp(30px, 4vw, 58px);
+}
+
+.acx-visual-side {
+  overflow: hidden;
+  padding: clamp(30px, 4vw, 60px);
+  background:
+    radial-gradient(circle at 74% 18%, rgba(33, 199, 255, 0.32), transparent 36%),
+    radial-gradient(circle at 22% 78%, rgba(125, 44, 230, 0.26), transparent 40%),
+    linear-gradient(135deg, #f9fbff 0%, #eaf6ff 44%, #f4efff 100%);
+}
+
+.acx-shell.is-register .acx-form-side {
+  transform: translateX(100%);
+}
+
+.acx-shell.is-register .acx-visual-side {
+  transform: translateX(-100%);
+}
+
+.acx-form-card {
+  position: relative;
+  width: 100%;
+  max-width: 395px;
+  padding: clamp(24px, 2.6vw, 36px);
+  border-radius: 22px;
+  background: rgba(9, 14, 31, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(20px);
+  animation: acx-form-in 0.45s ease both;
+}
+
+.acx-form-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 22px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(33, 199, 255, 0.76), rgba(125, 44, 230, 0.46), rgba(255, 255, 255, 0.06));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.acx-product-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: rgba(22, 119, 255, 0.15);
+  border: 1px solid rgba(67, 215, 255, 0.25);
+  color: #b9efff;
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.acx-stepdots {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.acx-stepdots span {
+  width: 20px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.13);
+}
+
+.acx-stepdots span.is-active {
+  background: linear-gradient(90deg, var(--acx-blue), var(--acx-cyan));
+  box-shadow: 0 0 12px rgba(33, 199, 255, 0.60);
+}
+
+.acx-form-title {
+  font-size: clamp(1.45rem, 2vw, 1.8rem);
+  font-weight: 850;
+  letter-spacing: -0.045em;
+  color: var(--acx-white);
+}
+
+.acx-form-sub {
+  color: var(--acx-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.acx-form-label {
+  font-size: 0.64rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: #c7d8ee;
+  margin-bottom: 6px;
+}
+
+.acx-input-group {
+  position: relative;
+}
+
+.acx-input-icon {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  color: #62d9ff;
+  font-size: 0.92rem;
+  pointer-events: none;
+}
+
+.acx-input-group .form-control {
+  height: 48px;
+  padding-left: 40px;
+  padding-right: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--acx-input-border);
+  background: var(--acx-input-bg);
+  color: var(--acx-white);
+  font-size: 0.9rem;
+  font-weight: 520;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.acx-input-group .form-control:focus {
+  border-color: rgba(33, 199, 255, 0.80);
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: 0 0 0 3px rgba(33, 199, 255, 0.14), 0 0 22px rgba(33, 199, 255, 0.12);
+  color: var(--acx-white);
+  outline: none;
+}
+
+.acx-input-group .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.30);
+}
+
+.acx-toggle-eye {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  z-index: 4;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 0;
+  color: var(--acx-muted-2);
+  padding: 6px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acx-toggle-eye:hover {
+  color: #b9efff;
+  background: rgba(33, 199, 255, 0.10);
+}
+
+.acx-error {
+  font-size: 0.72rem;
+  color: #fb7185;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 650;
+}
+
+.acx-info {
+  font-size: 0.75rem;
+  color: #5ce0ff;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 750;
+}
+
+.acx-muted-text {
+  font-size: 0.82rem;
+  color: var(--acx-muted-2);
+}
+
+.acx-btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 50px;
+  border: 0;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 850;
+  background: linear-gradient(90deg, #146fff 0%, #2847d8 45%, #6f2be8 78%, #21c7ff 100%);
+  box-shadow: 0 12px 34px rgba(22, 119, 255, 0.35);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.acx-btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -80%;
+  width: 56%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+}
+
+.acx-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 44px rgba(22, 119, 255, 0.45);
+}
+
+.acx-btn-primary:hover::before {
+  left: 120%;
+}
+
+.acx-btn-primary:disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.acx-spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.26);
+  border-top-color: #ffffff;
+  animation: acx-spin 0.7s linear infinite;
+}
+
+.acx-link-btn,
+.acx-back-btn {
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.acx-link-btn {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #70ddff;
+  font-weight: 850;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.acx-link-btn:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.acx-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: var(--acx-muted);
+  border-radius: 10px;
+  padding: 7px 12px;
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+.acx-back-btn:hover {
+  color: #70ddff;
+  border-color: rgba(33, 199, 255, 0.30);
+  background: rgba(33, 199, 255, 0.075);
+}
+
+/* Visual panel */
+.acx-visual-content {
+  position: relative;
+  z-index: 3;
+  max-width: 440px;
+  margin-inline: auto;
+  transition: transform 0.6s ease, opacity 0.35s ease;
+}
+
+.acx-brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 20px 50px rgba(14, 52, 100, 0.12);
+  backdrop-filter: blur(16px);
+}
+
+.acx-logo-pill {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 950;
+  color: #ffffff;
+  background: linear-gradient(135deg, #146fff, #21c7ff);
+  box-shadow: 0 10px 28px rgba(22, 119, 255, 0.28);
+}
+
+.acx-company {
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: #667797;
+  text-align: left;
+}
+
+.acx-product-name {
+  font-size: 1.1rem;
+  font-weight: 950;
+  letter-spacing: -0.04em;
+  color: var(--acx-text-dark);
+  line-height: 1.1;
+  text-align: left;
+}
+
+.acx-product-line {
+  display: inline-flex;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #1677ff;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(22, 119, 255, 0.14);
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.acx-visual-title {
+  max-width: 430px;
+  font-size: clamp(2rem, 3.05vw, 3.45rem);
+  line-height: 0.96;
+  letter-spacing: -0.075em;
+  font-weight: 950;
+  color: var(--acx-text-dark);
+}
+
+.acx-visual-title .acx-hl {
+  background: linear-gradient(90deg, #146fff, #21c7ff, #6f2be8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.acx-visual-sub {
+  max-width: 420px;
+  color: #53657d;
+  font-size: 0.9rem;
+  line-height: 1.58;
+  font-weight: 550;
+}
+
+.acx-user-flow {
+  display: grid;
+  gap: 10px;
+}
+
+.acx-flow-card {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow: 0 16px 42px rgba(14, 52, 100, 0.10);
+}
+
+.acx-flow-card i {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  color: #146fff;
+  background: linear-gradient(135deg, rgba(33, 199, 255, 0.16), rgba(22, 119, 255, 0.10));
+}
+
+.acx-flow-card strong {
+  display: block;
+  color: var(--acx-text-dark);
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.acx-flow-card span {
+  display: block;
+  margin-top: 2px;
+  color: #667797;
+  font-size: 0.70rem;
+  line-height: 1.35;
+}
+
+.acx-module-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.acx-module-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: #0b2554;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(22, 119, 255, 0.10);
+  font-size: 0.68rem;
+  font-weight: 800;
+  box-shadow: 0 12px 30px rgba(14, 52, 100, 0.08);
+}
+
+.acx-module-row i {
+  color: #1677ff;
+}
+
+/* Floating brand logo chips */
+.acx-floating-logos {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.acx-brand-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 92px;
+  padding: 8px 12px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.80);
+  box-shadow: 0 18px 46px rgba(14, 52, 100, 0.14);
+  backdrop-filter: blur(18px);
+  animation: acx-float-brand 7s ease-in-out infinite;
+}
+
+.acx-brand-label {
+  color: #092354;
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.acx-brand-symbol {
+  width: 19px;
+  height: 19px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #146fff, #21c7ff);
+  box-shadow: inset -5px 0 0 rgba(111, 43, 232, 0.45);
+}
+
+.acx-brand-visa .acx-brand-label { color: #173c8f; letter-spacing: 0.12em; }
+.acx-brand-mastercard .acx-brand-symbol { background: linear-gradient(90deg, #eb001b 0 48%, #f79e1b 52% 100%); box-shadow: none; }
+.acx-brand-rupay .acx-brand-label { color: #1f65b7; }
+.acx-brand-upi .acx-brand-label { color: #097a45; letter-spacing: 0.12em; }
+.acx-brand-npci .acx-brand-label { color: #1b4b7c; letter-spacing: 0.10em; }
+.acx-brand-amex .acx-brand-label { color: #1877bb; letter-spacing: 0.10em; }
+
+.acx-mobile-logo {
+  position: relative;
+  z-index: 4;
+}
+
+.acx-brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--acx-blue), var(--acx-cyan));
+}
+
+@keyframes acx-spin { to { transform: rotate(360deg); } }
+@keyframes acx-form-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes acx-orb-drift { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(24px, -18px, 0); } }
+@keyframes acx-float-brand { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-12px) rotate(1deg); } }
+
+@media (max-width: 991.98px) {
+  .acx-shell { overflow-y: auto; }
+  .acx-auth-frame { max-width: 480px; height: auto; min-height: 100dvh; border-radius: 0; border: 0; box-shadow: none; }
+  .acx-auth-frame::before, .acx-auth-frame::after { display: none; }
+  .acx-form-side { min-height: 100dvh; padding: 22px 16px; transform: none !important; }
+  .acx-visual-side { display: none !important; transform: none !important; }
+  .acx-form-card { max-width: 440px; }
+}
+
+@media (max-width: 575.98px) {
+  .acx-form-card { padding: 22px 18px; border-radius: 18px; }
+  .acx-form-card::before { border-radius: 18px; }
+  .acx-form-title { font-size: 1.26rem; }
+  .acx-input-group .form-control, .acx-btn-primary { height: 47px; }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .acx-auth-frame { max-width: calc(100vw - 36px); }
+  .acx-form-card { max-width: 370px; padding: 24px; }
+  .acx-visual-content { max-width: 390px; }
+  .acx-visual-title { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+}
+
+@media (min-width: 992px) and (max-height: 760px) {
+  .acx-auth-frame { height: calc(100dvh - 34px); min-height: 535px; }
+  .acx-form-card { padding: 22px; }
+  .acx-form-sub { margin-bottom: 0.9rem !important; }
+  .acx-user-flow { gap: 7px; }
+  .acx-flow-card { padding: 8px 10px; }
+  .acx-module-row span { padding: 6px 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acx-bg-orb, .acx-form-card, .acx-form-side, .acx-visual-side, .acx-auth-frame::after, .acx-brand-chip {
+    animation: none !important;
+    transition: none !important;
+  }
+  .acx-btn-primary::before { display: none; }
+}
+
+/* ── PREMIUM VISUAL CONTENT ADD-ON ─────────────────────────
+   Only enhances the visual panel content. Theme + transitions stay unchanged.
+   Floating logo lockups are CSS/SVG-style recreations, no backend changes.
+   ───────────────────────────────────────────────────────── */
+.acx-visual-description {
+  max-width: 450px;
+  margin-inline: auto;
+  color: #465b78;
+  font-size: 0.78rem;
+  line-height: 1.65;
+  font-weight: 650;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+
+.acx-floating-logos {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.acx-brand-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: auto;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.84);
+  box-shadow:
+    0 18px 46px rgba(14, 52, 100, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(18px);
+  animation: acx-float-brand 7s ease-in-out infinite;
+}
+
+.acx-brand-visa { top: 13%; left: 8%; animation-delay: 0s; }
+.acx-brand-mastercard { top: 15%; right: 7%; animation-delay: -1.1s; }
+.acx-brand-rupay { left: 10%; bottom: 17%; animation-delay: -2.2s; }
+.acx-brand-upi { right: 10%; bottom: 13%; animation-delay: -3.1s; }
+.acx-brand-npci { top: 42%; left: 4%; animation-delay: -1.8s; }
+.acx-brand-amex { top: 43%; right: 5%; animation-delay: -2.7s; }
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.brand-logo-visa {
+  color: #173c8f;
+  font-size: 1.02rem;
+  font-weight: 950;
+  letter-spacing: 0.10em;
+  font-style: italic;
+}
+
+.acx-brand-mastercard {
+  padding-left: 12px;
+  padding-right: 13px;
+}
+
+.mc-circles {
+  position: relative;
+  width: 31px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.mc-circles span {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+}
+
+.mc-circles span:first-child {
+  left: 0;
+  background: #eb001b;
+}
+
+.mc-circles span:last-child {
+  right: 0;
+  background: rgba(247, 158, 27, 0.92);
+  mix-blend-mode: multiply;
+}
+
+.brand-logo-mastercard {
+  color: #1b2438;
+  font-size: 0.54rem;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  text-transform: lowercase;
+}
+
+.brand-logo-rupay {
+  color: #13458f;
+  font-size: 0.96rem;
+  font-weight: 950;
+  letter-spacing: -0.04em;
+}
+
+.rupay-mark {
+  width: 20px;
+  height: 13px;
+  display: inline-block;
+  background: linear-gradient(135deg, #f58220 0 49%, #00a651 51% 100%);
+  clip-path: polygon(0 0, 100% 50%, 0 100%, 24% 50%);
+}
+
+.brand-logo-upi {
+  color: #12233b;
+  font-size: 0.98rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.upi-mark {
+  position: relative;
+  width: 24px;
+  height: 18px;
+  display: inline-block;
+}
+
+.upi-mark span {
+  position: absolute;
+  top: 2px;
+  width: 11px;
+  height: 14px;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.upi-mark span:first-child {
+  left: 1px;
+  background: #f58220;
+}
+
+.upi-mark span:last-child {
+  right: 1px;
+  background: #128c45;
+}
+
+.brand-logo-npci {
+  color: #1b4b7c;
+  font-size: 0.86rem;
+  font-weight: 950;
+  letter-spacing: 0.10em;
+}
+
+.brand-logo-amex {
+  color: #1877bb;
+  font-size: 0.88rem;
+  font-weight: 950;
+  letter-spacing: 0.10em;
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .acx-brand-chip {
+    height: 38px;
+    padding-inline: 11px;
+    transform: scale(0.88);
+  }
+
+  .acx-brand-npci { left: 2%; }
+  .acx-brand-amex { right: 2%; }
+
+  .acx-visual-description {
+    font-size: 0.72rem;
+    max-width: 390px;
+  }
+}
+
+@media (min-width: 992px) and (max-height: 760px) {
+  .acx-brand-chip {
+    height: 36px;
+    padding-inline: 10px;
+  }
+
+  .acx-visual-description {
+    font-size: 0.70rem;
+    line-height: 1.5;
+    margin-bottom: 0 !important;
+  }
+}

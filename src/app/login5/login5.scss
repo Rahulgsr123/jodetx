@@ -1,0 +1,2148 @@
+/* ===========================================================
+   AcquirerX Login — Pixel-matched to reference image
+   Non-scrollable, full viewport, exact color theme.
+   Replace logo comments where noted.
+   =========================================================== */
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── SHELL & VARIABLES ─────────────────────────────────── */
+
+.acx-shell {
+  --acx-blue: #2563eb;
+  --acx-blue-mid: #3b82f6;
+  --acx-blue-deep: #1d4ed8;
+  --acx-ink: #0f172a;
+  --acx-ink-2: #1e293b;
+  --acx-muted: #64748b;
+  --acx-light-muted: #94a3b8;
+  --acx-border: #e2e8f0;
+  --acx-input-border: #e2e8f0;
+  --acx-danger: #ef4444;
+  --acx-success: #2563eb;
+  --acx-card: #ffffff;
+
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  color: var(--acx-ink);
+ font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* Exact background from image: light blue-lavender-white gradient */
+  background:
+    radial-gradient(ellipse 70% 60% at 10% 100%, rgba(147, 197, 253, 0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 90% 10%, rgba(186, 230, 253, 0.45) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(199, 220, 254, 0.4) 0%, transparent 50%),
+    linear-gradient(160deg, #dbeafe 0%, #eff6ff 25%, #f8faff 50%, #f0f7ff 75%, #e8f4ff 100%);
+}
+
+/* ── FULL-SCREEN LAYOUT ──────────────────────────────────── */
+
+.acx-login-experience {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  align-items: stretch;
+  padding: 0 40px 0 52px;
+  gap: 0;
+  box-sizing: border-box;
+}
+
+/* ── LEFT VISUAL PANEL ───────────────────────────────────── */
+
+.acx-visual-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 36px 0 36px;
+  overflow: hidden;
+}
+
+/* ── Brand lockup ── */
+.acx-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  position: relative;
+}
+
+.acx-brand-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.1);
+  display: grid;
+  place-items: center;
+}
+
+/* X-shaped logo icon made with CSS (matches the image exactly) */
+.acx-x-logo {
+  width: 26px;
+  height: 26px;
+  position: relative;
+}
+
+.acx-x-logo::before,
+.acx-x-logo::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  top: 50%;
+  left: 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #60a5fa, #2563eb);
+}
+
+.acx-x-logo::before {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.acx-x-logo::after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.acx-brand-name-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.acx-brand-wordmark {
+  font-size: 1.48rem;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  color: var(--acx-ink);
+}
+
+.acx-brand-wordmark .acx-x-char {
+  color: var(--acx-blue);
+}
+
+.acx-brand-tagline {
+  font-size: 0.7rem;
+  color: var(--acx-muted);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* ── Hero copy ── */
+.acx-hero-copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 500px;
+  position: relative;
+  z-index: 5;
+  padding: 0 0 20px 0;
+}
+
+.acx-headline {
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: -0.065em;
+  line-height: 1.05;
+  color: var(--acx-ink);
+  margin: 0 0 20px;
+}
+
+.acx-headline-highlight {
+  color: var(--acx-blue);
+}
+
+.acx-hero-desc {
+  color: #475569;
+  font-size: 0.94rem;
+  line-height: 1.75;
+  font-weight: 420;
+  margin: 0 0 8px;
+  max-width: 420px;
+}
+
+.acx-hero-desc strong {
+  font-weight: 700;
+  color: var(--acx-ink-2);
+}
+
+/* ── Trust row ── */
+.acx-trust-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 5;
+  position: relative;
+}
+
+.acx-trust-divider {
+  width: 1px;
+  height: 30px;
+  background: rgba(148, 163, 184, 0.35);
+}
+
+.acx-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.acx-trust-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(37, 99, 235, 0.28);
+  display: grid;
+  place-items: center;
+  color: var(--acx-blue);
+  font-size: 0.88rem;
+  flex-shrink: 0;
+}
+
+.acx-trust-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--acx-ink);
+  line-height: 1.2;
+}
+
+.acx-trust-sub {
+  font-size: 0.68rem;
+  color: var(--acx-muted);
+  font-weight: 500;
+}
+
+/* ── Curved connecting line (SVG overlay) ── */
+.acx-connecting-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Shield illustration ── */
+.acx-shield-wrap {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-130px);
+  width: 180px;
+  height: 180px;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 3;
+  animation: acx-float-soft 5s ease-in-out infinite;
+}
+
+/* Pedestal base layers */
+.acx-shield-pedestal {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.acx-pedestal-layer {
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.acx-pedestal-layer-1 {
+  width: 140px;
+  height: 18px;
+  background: rgba(147, 197, 253, 0.28);
+  border: 1px solid rgba(147, 197, 253, 0.3);
+}
+
+.acx-pedestal-layer-2 {
+  width: 110px;
+  height: 14px;
+  background: rgba(147, 197, 253, 0.2);
+  border: 1px solid rgba(147, 197, 253, 0.22);
+  margin-top: 4px;
+}
+
+.acx-shield-svg {
+  position: relative;
+  z-index: 2;
+  width: 110px;
+  height: 118px;
+  filter: drop-shadow(0 12px 32px rgba(37, 99, 235, 0.22));
+}
+
+/* ── Floating brand cards ── */
+.acx-brand-card {
+  position: absolute;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.06),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  z-index: 4;
+}
+
+/* VISA — top right area */
+.acx-card-visa {
+  top: 90px;
+  right: 18%;
+  width: 120px;
+  height: 70px;
+  animation: acx-float-soft 5.2s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.acx-visa-text {
+  font-size: 1.75rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #1a1f71 30%, #0066b2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Mastercard — mid right */
+.acx-card-mastercard {
+  top: 200px;
+  right: 11%;
+  width: 128px;
+  height: 80px;
+  flex-direction: column;
+  gap: 4px;
+  animation: acx-float-soft 4.8s ease-in-out infinite;
+  animation-delay: -1.2s;
+}
+
+.acx-mc-circles {
+  display: flex;
+  position: relative;
+  width: 56px;
+  height: 34px;
+}
+
+.acx-mc-left {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #eb001b;
+  position: absolute;
+  left: 0;
+}
+
+.acx-mc-right {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #f79e1b;
+  position: absolute;
+  right: 0;
+  opacity: 0.92;
+}
+
+.acx-mc-label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: 0.06em;
+}
+
+/* UPI — mid-lower right */
+
+.acx-card-upi {
+  top: 42.2% !important;
+  right: 12.2% !important;
+  width: clamp(138px, 10.5vw, 160px) !important;
+  height: clamp(66px, 5.1vw, 78px) !important;
+  padding: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.88) !important;
+
+  box-shadow:
+    0 18px 38px rgba(35, 82, 150, 0.13),
+    0 6px 14px rgba(35, 82, 150, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96) !important;
+
+  backdrop-filter: blur(18px) !important;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+
+  animation:
+    acx-upi-float 6.4s ease-in-out infinite,
+    acx-upi-glow 4.2s ease-in-out infinite;
+}
+
+.acx-upi-logo {
+  width: 76%;
+  max-width: 118px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transform: translateZ(18px);
+  filter: drop-shadow(0 4px 8px rgba(15, 45, 100, 0.12));
+}
+
+.acx-card-upi:hover {
+  animation-play-state: paused;
+  transform: translateY(-8px) rotateX(5deg) rotateY(-6deg) scale(1.035);
+  box-shadow:
+    0 26px 52px rgba(35, 82, 150, 0.18),
+    0 10px 22px rgba(35, 82, 150, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+@keyframes acx-upi-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 18px) rotateX(0deg) rotateY(0deg);
+  }
+
+  25% {
+    transform: translate3d(5px, -6px, 28px) rotateX(2deg) rotateY(-3deg);
+  }
+
+  50% {
+    transform: translate3d(0, -12px, 34px) rotateX(4deg) rotateY(-5deg);
+  }
+
+  75% {
+    transform: translate3d(-5px, -5px, 26px) rotateX(2deg) rotateY(3deg);
+  }
+}
+
+@keyframes acx-upi-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 18px 38px rgba(35, 82, 150, 0.13),
+      0 6px 14px rgba(35, 82, 150, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  }
+
+  50% {
+    box-shadow:
+      0 24px 48px rgba(35, 82, 150, 0.18),
+      0 9px 20px rgba(35, 82, 150, 0.11),
+      0 0 24px rgba(54, 145, 255, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+  }
+}
+
+
+
+/* RuPay — lower left */
+
+.acx-card-rupay {
+  left: 2% !important;
+  bottom: 20% !important;
+  width: clamp(110px, 8.2vw, 128px) !important;
+  height: clamp(54px, 4.3vw, 62px) !important;
+  padding: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.88) !important;
+
+  box-shadow:
+    0 18px 38px rgba(35, 82, 150, 0.13),
+    0 6px 14px rgba(35, 82, 150, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96) !important;
+
+  backdrop-filter: blur(18px) !important;
+  animation: acx-card-float-b 6.2s ease-in-out infinite;
+}
+
+.acx-rupay-logo {
+  width: 74%;
+  max-width: 92px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Razorpay — lower right */
+
+.acx-card-razorpay {
+  right: 10.2% !important;
+  bottom: 15.8% !important;
+  width: clamp(140px, 10.7vw, 168px) !important;
+  height: clamp(58px, 4.7vw, 68px) !important;
+  padding: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.88) !important;
+
+  box-shadow:
+    0 18px 38px rgba(35, 82, 150, 0.13),
+    0 6px 14px rgba(35, 82, 150, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96) !important;
+
+  backdrop-filter: blur(18px) !important;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+
+  animation:
+    acx-razorpay-float 6.1s ease-in-out infinite,
+    acx-razorpay-glow 4s ease-in-out infinite;
+}
+
+.acx-razorpay-logo {
+  width: 78%;
+  max-width: 116px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transform: translateZ(18px);
+  filter: drop-shadow(0 4px 8px rgba(15, 45, 100, 0.12));
+}
+
+.acx-card-razorpay:hover {
+  animation-play-state: paused;
+  transform: translateY(-8px) rotateX(5deg) rotateY(-6deg) scale(1.035);
+  box-shadow:
+    0 26px 52px rgba(35, 82, 150, 0.18),
+    0 10px 22px rgba(35, 82, 150, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+@keyframes acx-razorpay-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 18px) rotateX(0deg) rotateY(0deg);
+  }
+
+  25% {
+    transform: translate3d(-4px, -6px, 28px) rotateX(2deg) rotateY(3deg);
+  }
+
+  50% {
+    transform: translate3d(0, -11px, 34px) rotateX(4deg) rotateY(5deg);
+  }
+
+  75% {
+    transform: translate3d(4px, -5px, 26px) rotateX(2deg) rotateY(-3deg);
+  }
+}
+
+@keyframes acx-razorpay-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 18px 38px rgba(35, 82, 150, 0.13),
+      0 6px 14px rgba(35, 82, 150, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  }
+
+  50% {
+    box-shadow:
+      0 24px 48px rgba(35, 82, 150, 0.18),
+      0 9px 20px rgba(35, 82, 150, 0.11),
+      0 0 24px rgba(54, 145, 255, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+  }
+}
+
+
+
+
+/* Bank nodes */
+.acx-node {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  display: grid;
+  place-items: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  z-index: 4;
+}
+
+.acx-node-1 { top: 152px; right: 33%; }
+.acx-node-2 { top: 272px; right: 36%; }
+.acx-node-3 { bottom: 240px; right: 30%; }
+
+/* Connector dots on the line */
+.acx-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(147, 197, 253, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  z-index: 4;
+}
+
+.acx-dot-1 { top: 138px; right: 31%; }
+.acx-dot-2 { top: 290px; right: 34%; }
+.acx-dot-3 { bottom: 265px; right: 32%; }
+
+/* ── RIGHT FORM PANEL ────────────────────────────────────── */
+
+.acx-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 0;
+}
+
+.acx-form-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: 32px 34px 28px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+
+  /* Card border — exactly like the image: thin teal/blue stroke */
+  border: 1.5px solid rgba(147, 197, 253, 0.5);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.03),
+    0 16px 48px rgba(15, 23, 42, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Card X logo */
+.acx-card-logo-box {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: #f0f7ff;
+  border: 1px solid rgba(147, 197, 253, 0.3);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.1);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 18px;
+}
+
+.acx-card-x-logo {
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+.acx-card-x-logo::before,
+.acx-card-x-logo::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 7px;
+  top: 50%;
+  left: 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #60a5fa 0%, #2563eb 60%, #1d4ed8 100%);
+}
+
+.acx-card-x-logo::before {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.acx-card-x-logo::after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+/* product badge + step dots row */
+.acx-product-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.07);
+  color: var(--acx-blue-deep);
+  font-size: 0.6rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  border: 1px solid rgba(37, 99, 235, 0.10);
+}
+
+.acx-stepdots {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.acx-stepdots span {
+  width: 20px;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(37, 99, 235, 0.13);
+  transition: background 0.3s ease;
+}
+
+.acx-stepdots span.is-active {
+  background: var(--acx-blue);
+}
+
+.acx-form-title {
+  font-size: 1.48rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--acx-ink);
+  margin: 10px 0 5px !important;
+  text-align: center;
+}
+
+.acx-form-sub {
+  color: var(--acx-muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  font-weight: 440;
+  text-align: center;
+  margin-bottom: 20px !important;
+}
+
+/* Labels */
+.acx-form-label {
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: var(--acx-ink-2);
+  margin-bottom: 7px;
+  display: block;
+}
+
+/* Input group — preserved exactly */
+.acx-input-group {
+  position: relative;
+}
+
+.acx-input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9aacbf;
+  font-size: 0.94rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.acx-input-group .form-control {
+  height: 50px;
+  padding-left: 42px;
+  padding-right: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--acx-input-border);
+  background: #f8fafc;
+  font-size: 0.92rem;
+  color: var(--acx-ink);
+  font-weight: 500;
+  box-shadow: none;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  width: 100%;
+}
+
+
+
+.acx-input-group .form-control:focus {
+  border-color: rgba(37, 99, 235, 0.45);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+  background: #ffffff;
+  outline: none;
+}
+
+.acx-input-group .form-control::placeholder {
+  color: rgba(100, 116, 139, 0.5);
+  font-weight: 400;
+}
+
+.acx-toggle-eye {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  z-index: 4;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 0;
+  color: #93a7bd;
+  padding: 6px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+}
+
+.acx-toggle-eye:hover {
+  color: var(--acx-blue);
+  background: rgba(37, 99, 235, 0.07);
+}
+
+.acx-error {
+  font-size: 0.73rem;
+  color: var(--acx-danger);
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 650;
+}
+
+.acx-info {
+  font-size: 0.75rem;
+  color: var(--acx-success);
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+}
+
+/* Remember me + Forgot row */
+.acx-remember-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.acx-remember-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: var(--acx-ink-2);
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+.acx-checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  accent-color: var(--acx-blue);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.acx-forgot-btn {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: var(--acx-blue);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.acx-forgot-btn:hover {
+  color: var(--acx-blue-deep);
+  text-decoration: underline;
+}
+
+/* Primary CTA */
+.acx-btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 52px;
+  border: 0;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #ffffff;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 55%, #1d4ed8 100%);
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.35);
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+  cursor: pointer;
+}
+
+.acx-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 26px rgba(37, 99, 235, 0.42);
+}
+
+.acx-btn-primary:active { transform: translateY(0); }
+
+.acx-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.acx-spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  animation: acx-spin 0.7s linear infinite;
+}
+
+/* Divider */
+.acx-divider {
+  position: relative;
+  text-align: center;
+  margin: 14px 0;
+}
+
+.acx-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--acx-border);
+}
+
+.acx-divider span {
+  position: relative;
+  background: var(--acx-card);
+  padding: 0 12px;
+  font-size: 0.8rem;
+  color: var(--acx-light-muted);
+  font-weight: 500;
+}
+
+/* Social buttons */
+.acx-social-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.acx-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid var(--acx-border);
+  background: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--acx-ink-2);
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.acx-social-btn:hover {
+  border-color: rgba(37, 99, 235, 0.28);
+  background: #f8faff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* Footer link */
+.acx-footer-link {
+  font-size: 0.83rem;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.acx-muted-text {
+  font-size: 0.83rem;
+  color: var(--acx-muted);
+}
+
+.acx-link-btn {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: var(--acx-blue);
+  font-weight: 700;
+  font-size: 0.83rem;
+  cursor: pointer;
+}
+
+.acx-link-btn:hover {
+  color: var(--acx-blue-deep);
+  text-decoration: underline;
+}
+
+.acx-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(37, 99, 235, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.10);
+  color: var(--acx-muted);
+  border-radius: 10px;
+  padding: 7px 12px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.acx-back-btn:hover {
+  color: var(--acx-blue);
+  border-color: rgba(37, 99, 235, 0.22);
+  background: rgba(37, 99, 235, 0.08);
+}
+
+/* Logo fallback (for text/image replacement) */
+.acx-logo-fallback {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.9rem;
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 55%, #1d4ed8 100%);
+}
+
+/* ── KEYFRAMES ─────────────────────────────────────── */
+
+@keyframes acx-float-soft {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-9px); }
+}
+
+@keyframes acx-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acx-brand-card,
+  .acx-shield-wrap {
+    animation: none !important;
+  }
+}
+
+/* ── RESPONSIVE: shrink to fit smaller viewports ─────── */
+
+@media (max-width: 1100px) {
+  .acx-login-experience {
+    grid-template-columns: 1fr 420px;
+    padding: 0 28px 0 36px;
+  }
+}
+
+@media (max-width: 880px) {
+  .acx-shell {
+    position: relative;
+    overflow-y: auto;
+  }
+  .acx-login-experience {
+    height: auto;
+    min-height: 100vh;
+    grid-template-columns: 1fr;
+    padding: 28px 20px;
+  }
+  .acx-visual-panel {
+    padding: 24px 0;
+    min-height: 380px;
+  }
+  .acx-brand-card,
+  .acx-shield-wrap,
+  .acx-node,
+  .acx-dot { display: none; }
+  .acx-connecting-line { display: none; }
+  .acx-form-panel { padding: 0 0 32px; }
+  .acx-form-card { max-width: 100%; }
+}
+
+@media (max-width: 560px) {
+  .acx-visual-panel { display: none; }
+  .acx-form-card { padding: 24px 18px; border-radius: 20px; }
+  .acx-social-row { grid-template-columns: 1fr 1fr; }
+}
+
+/* ===========================================================
+   FINAL OVERRIDE — 3D matched reference layout
+   Put this at the end of login5.scss.
+   Fixes overlap, positions, card size, glass depth, and shadows.
+   =========================================================== */
+
+.acx-shell {
+  position: relative !important;
+  min-height: 100dvh !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(circle at 100% 50%, rgba(0, 123, 255, 0.78) 0%, rgba(0, 123, 255, 0.48) 18%, rgba(96, 178, 255, 0.20) 39%, transparent 55%),
+    radial-gradient(circle at 92% 92%, rgba(21, 105, 255, 0.38) 0%, transparent 34%),
+    radial-gradient(circle at 18% 9%, rgba(255, 255, 255, 0.94) 0%, rgba(242, 249, 255, 0.78) 34%, transparent 62%),
+    linear-gradient(135deg, #ffffff 0%, #f4f9ff 38%, #ddecff 72%, #2384ff 100%) !important;
+}
+
+.acx-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 30% 73%, rgba(77, 152, 255, 0.12) 0%, transparent 42%),
+    linear-gradient(105deg, transparent 0 55%, rgba(255, 255, 255, 0.42) 68%, transparent 80%);
+  z-index: 0;
+}
+
+.acx-shell::after {
+  content: "";
+  position: absolute;
+  right: -8vw;
+  bottom: -7vw;
+  width: 52vw;
+  height: 52vw;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.52;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.26),
+    inset 0 0 55px rgba(255, 255, 255, 0.16),
+    0 0 90px rgba(59, 130, 246, 0.20);
+}
+
+.acx-login-experience {
+  position: relative !important;
+  z-index: 2 !important;
+  min-height: 100dvh !important;
+  height: auto !important;
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: minmax(610px, 1fr) clamp(520px, 39.8vw, 612px) !important;
+  gap: clamp(24px, 2.8vw, 54px) !important;
+  padding: clamp(34px, 5.8vh, 62px) clamp(46px, 5.3vw, 84px) clamp(28px, 5.6vh, 62px) clamp(40px, 4vw, 52px) !important;
+  box-sizing: border-box !important;
+  align-items: stretch !important;
+}
+
+.acx-visual-panel {
+  position: relative !important;
+  min-height: calc(100dvh - 96px) !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  isolation: isolate;
+}
+
+.acx-brand-lockup {
+  position: relative !important;
+  z-index: 12 !important;
+  display: inline-flex !important;
+  align-items: flex-start !important;
+  gap: 9px !important;
+}
+
+.acx-brand-icon {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 13px !important;
+  display: grid !important;
+  place-items: center !important;
+  background: rgba(255, 255, 255, 0.54) !important;
+  border: 1px solid rgba(255, 255, 255, 0.72) !important;
+  box-shadow: 0 14px 30px rgba(21, 102, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+}
+
+.acx-brand-wordmark {
+  font-size: clamp(2.1rem, 3.25vw, 3.2rem) !important;
+  line-height: 0.9 !important;
+  letter-spacing: -0.075em !important;
+  font-weight: 900 !important;
+  color: #081541 !important;
+}
+
+.acx-brand-tagline {
+  margin-top: 10px !important;
+  font-size: clamp(0.72rem, 0.83vw, 0.92rem) !important;
+  color: #0054ff !important;
+  font-weight: 600 !important;
+}
+
+.acx-hero-copy {
+  position: absolute !important;
+  z-index: 10 !important;
+  left: 0 !important;
+  top: 15% !important;
+  width: min(540px, 64%) !important;
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+.acx-headline {
+  font-family: "Sora", "Plus Jakarta Sans", "Inter", sans-serif !important;
+  font-size: 45px !important;
+  line-height: 1.12 !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.06em !important;
+}
+
+.acx-headline-highlight {
+  color: #126bff !important;
+  text-shadow: 0 10px 28px rgba(18, 107, 255, 0.17) !important;
+}
+
+.acx-hero-desc {
+  max-width: 505px !important;
+  margin: 0 0 clamp(18px, 2.6vh, 28px) !important;
+  color: #101b44 !important;
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.acx-connecting-line {
+  position: absolute !important;
+  top: 9% !important;
+  right: 6.5% !important;
+  left: auto !important;
+  width: 46% !important;
+  height: 68% !important;
+  z-index: 2 !important;
+  opacity: 0.9 !important;
+  filter: drop-shadow(0 0 9px rgba(40, 131, 255, 0.18)) !important;
+}
+
+.acx-shield-wrap {
+  position: absolute !important;
+  z-index: 7 !important;
+  left: 29% !important;
+  bottom: 17% !important;
+  transform: none !important;
+  width: clamp(140px, 12vw, 185px) !important;
+  height: clamp(140px, 12vw, 185px) !important;
+  animation: acx-float-shield-final 5.4s ease-in-out infinite !important;
+}
+
+.acx-shield-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 18% 8% -8%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(96, 165, 250, 0.16), transparent 68%);
+  filter: blur(8px);
+}
+
+.acx-shield-pedestal {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 3% !important;
+  width: 178px !important;
+  height: 66px !important;
+  transform: translateX(-50%) !important;
+  border-radius: 50% !important;
+  background:
+    radial-gradient(ellipse at center, rgba(255,255,255,0.68) 0 18%, rgba(131, 188, 255, 0.18) 19% 45%, transparent 68%) !important;
+  border: 1px solid rgba(139, 198, 255, 0.18) !important;
+}
+
+.acx-pedestal-layer {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(132, 192, 255, 0.30) !important;
+  background: rgba(255, 255, 255, 0.22) !important;
+}
+
+.acx-pedestal-layer-1 {
+  width: 158px !important;
+  height: 32px !important;
+  bottom: 15px !important;
+}
+
+.acx-pedestal-layer-2 {
+  width: 120px !important;
+  height: 23px !important;
+  bottom: 29px !important;
+}
+
+.acx-shield-svg {
+  width: clamp(100px, 8.6vw, 132px) !important;
+  height: auto !important;
+  filter: drop-shadow(0 18px 30px rgba(26, 109, 255, 0.24)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.5)) !important;
+}
+
+/* 3D floating brand cards */
+.acx-brand-card {
+  z-index: 8 !important;
+  border-radius: 17px !important;
+  background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(244,249,255,0.86)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.92) !important;
+  box-shadow:
+    0 24px 48px rgba(26, 68, 140, 0.12),
+    0 8px 18px rgba(26, 68, 140, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(18px) !important;
+  transform-style: preserve-3d !important;
+}
+
+.acx-card-visa {
+  top: 7.5% !important;
+  right: 13.5% !important;
+  width: clamp(102px, 7.6vw, 118px) !important;
+  height: clamp(56px, 4.4vw, 64px) !important;
+}
+
+.acx-card-mastercard {
+  top: 24.5% !important;
+  right: 5% !important;
+  width: clamp(108px, 7.8vw, 122px) !important;
+  height: clamp(64px, 5vw, 76px) !important;
+}
+
+
+
+.acx-card-rupay {
+  left: 2% !important;
+  bottom: 20% !important;
+  width: clamp(110px, 8.2vw, 128px) !important;
+  height: clamp(54px, 4.3vw, 62px) !important;
+  padding: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.88) !important;
+
+  box-shadow:
+    0 18px 38px rgba(35, 82, 150, 0.13),
+    0 6px 14px rgba(35, 82, 150, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96) !important;
+
+  backdrop-filter: blur(18px) !important;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+
+  animation:
+    acx-rupay-float 5.8s ease-in-out infinite,
+    acx-rupay-glow 3.8s ease-in-out infinite;
+}
+
+.acx-rupay-logo {
+  width: 74%;
+  max-width: 92px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transform: translateZ(18px);
+  filter: drop-shadow(0 4px 8px rgba(15, 45, 100, 0.12));
+}
+
+.acx-card-rupay:hover {
+  animation-play-state: paused;
+  transform: translateY(-8px) rotateX(5deg) rotateY(-6deg) scale(1.035);
+  box-shadow:
+    0 26px 52px rgba(35, 82, 150, 0.18),
+    0 10px 22px rgba(35, 82, 150, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+@keyframes acx-rupay-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 18px) rotateX(0deg) rotateY(0deg);
+  }
+
+  25% {
+    transform: translate3d(4px, -7px, 28px) rotateX(2deg) rotateY(-3deg);
+  }
+
+  50% {
+    transform: translate3d(0, -12px, 34px) rotateX(4deg) rotateY(-5deg);
+  }
+
+  75% {
+    transform: translate3d(-4px, -6px, 26px) rotateX(2deg) rotateY(3deg);
+  }
+}
+
+@keyframes acx-rupay-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 18px 38px rgba(35, 82, 150, 0.13),
+      0 6px 14px rgba(35, 82, 150, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  }
+
+  50% {
+    box-shadow:
+      0 24px 48px rgba(35, 82, 150, 0.18),
+      0 9px 20px rgba(35, 82, 150, 0.11),
+      0 0 24px rgba(54, 145, 255, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+  }
+}
+
+
+
+.acx-node-1 { top: 18.9% !important; right: 6.2% !important; }
+.acx-node-2 { top: 56.5% !important; left: 55% !important; right: auto !important; }
+.acx-node-3 { bottom: 26% !important; left: 23.6% !important; right: auto !important; }
+
+.acx-dot-1 { top: 23.6% !important; right: 5.3% !important; }
+.acx-dot-2 { top: 50.5% !important; right: 6.9% !important; }
+.acx-dot-3 { bottom: 25% !important; left: 23.5% !important; right: auto !important; }
+
+.acx-trust-row {
+  position: absolute !important;
+  z-index: 12 !important;
+  left: 0 !important;
+  right: 3% !important;
+  bottom: 0 !important;
+  height: 58px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: clamp(18px, 2.7vw, 44px) !important;
+}
+
+.acx-trust-item {
+  gap: 12px !important;
+  min-width: 160px !important;
+}
+
+.acx-trust-icon {
+  width: 41px !important;
+  height: 41px !important;
+  border: 2px solid #176cff !important;
+  background: rgba(255,255,255,0.52) !important;
+  box-shadow: 0 8px 22px rgba(23, 108, 255, 0.11), inset 0 1px 0 rgba(255,255,255,0.9) !important;
+}
+
+.acx-trust-title {
+  color: #091642 !important;
+  font-size: 0.92rem !important;
+  font-weight: 850 !important;
+}
+
+.acx-trust-sub {
+  margin-top: 5px !important;
+  color: #0c1c43 !important;
+  font-size: 0.84rem !important;
+}
+
+/* Right 3D glass login card */
+.acx-form-panel {
+  position: relative !important;
+  z-index: 12 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+}
+
+.acx-form-card {
+  position: relative !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: min(902px, calc(100dvh - 96px)) !important;
+  max-height: calc(100dvh - 78px) !important;
+  padding: clamp(44px, 5.5vh, 58px) clamp(48px, 4.9vw, 78px) clamp(30px, 4.3vh, 48px) !important;
+  border-radius: 34px !important;
+  overflow: hidden !important;
+  background: linear-gradient(139deg, rgba(255,255,255,0.74) 0%, rgba(245,250,255,0.49) 48%, rgba(194,225,255,0.36) 100%) !important;
+  border: 1.6px solid rgba(72, 190, 255, 0.95) !important;
+  box-shadow:
+    0 40px 90px rgba(13, 74, 165, 0.26),
+    0 16px 36px rgba(10, 39, 100, 0.10),
+    -12px 0 42px rgba(255, 255, 255, 0.54),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98),
+    inset 0 -24px 80px rgba(255,255,255,0.22) !important;
+  backdrop-filter: blur(22px) saturate(130%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  transform: perspective(1200px) rotateY(-2.5deg) rotateX(0.8deg) !important;
+  transform-style: preserve-3d !important;
+}
+
+.acx-form-card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 32px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 6%, rgba(255,255,255,0.90), transparent 33%),
+    radial-gradient(circle at 96% 95%, rgba(20, 132, 255, 0.12), transparent 46%),
+    linear-gradient(125deg, rgba(255,255,255,0.48), transparent 48%);
+  z-index: 0;
+}
+
+.acx-form-card > * {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.acx-card-logo-box {
+  width: clamp(76px, 6.2vw, 92px) !important;
+  height: clamp(76px, 6.2vw, 92px) !important;
+  margin: 0 auto clamp(26px, 3.5vh, 34px) !important;
+  border-radius: 18px !important;
+  background: rgba(255,255,255,0.94) !important;
+  border: 1px solid rgba(255,255,255,0.9) !important;
+  box-shadow: 0 20px 42px rgba(23, 108, 255, 0.16), inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+
+.acx-card-x-logo {
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.acx-card-x-logo::before,
+.acx-card-x-logo::after {
+  width: 44px !important;
+  height: 10px !important;
+}
+
+.acx-product-badge {
+  display: none !important;
+}
+
+.acx-form-title {
+  margin: 0 0 12px !important;
+  text-align: center !important;
+  color: #081541 !important;
+  font-size: clamp(1.82rem, 2.15vw, 2.25rem) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.055em !important;
+  font-weight: 900 !important;
+}
+
+.acx-form-sub {
+  margin: 0 0 clamp(34px, 4.8vh, 50px) !important;
+  text-align: center !important;
+  color: #253454 !important;
+  font-size: clamp(0.92rem, 1.02vw, 1.04rem) !important;
+  line-height: 1.5 !important;
+  font-weight: 500 !important;
+}
+
+.acx-form-label {
+  display: block !important;
+  margin: 0 0 10px !important;
+  color: #07153c !important;
+  font-size: 0.88rem !important;
+  line-height: 1.2 !important;
+  font-weight: 850 !important;
+}
+
+.acx-input-group .form-control {
+  width: 100% !important;
+  height: clamp(52px, 5.5vh, 58px) !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(91, 119, 161, 0.22) !important;
+  background: rgba(255,255,255,0.94) !important;
+  color: #0d183c !important;
+  padding: 0 50px 0 48px !important;
+  font-size: 1rem !important;
+  font-weight: 520 !important;
+  box-shadow: 0 10px 28px rgba(36, 82, 140, 0.08), inset 0 1px 0 rgba(255,255,255,0.98) !important;
+}
+
+.acx-input-group .form-control:focus {
+  transform: translateY(-1px) !important;
+  border-color: rgba(25, 108, 255, 0.52) !important;
+  box-shadow: 0 14px 34px rgba(36, 82, 140, 0.12), 0 0 0 4px rgba(29, 109, 255, 0.10), inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+
+.acx-input-icon {
+  left: 17px !important;
+  color: #63789c !important;
+  font-size: 1.08rem !important;
+}
+
+.acx-toggle-eye {
+  right: 12px !important;
+  width: 37px !important;
+  height: 37px !important;
+  border-radius: 9px !important;
+  color: #3c526f !important;
+  background: rgba(239, 245, 255, 0.96) !important;
+}
+
+.acx-error {
+  min-height: 18px !important;
+  margin-top: 8px !important;
+  color: #ff1010 !important;
+  font-size: 0.78rem !important;
+  font-weight: 620 !important;
+}
+
+.acx-remember-row {
+  margin: 16px 0 24px !important;
+}
+
+.acx-remember-label {
+  gap: 10px !important;
+  color: #101b3e !important;
+  font-size: 0.93rem !important;
+  font-weight: 540 !important;
+}
+
+.acx-checkbox {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 5px !important;
+}
+
+.acx-forgot-btn,
+.acx-link-btn {
+  color: #0054ff !important;
+  font-size: 0.9rem !important;
+  font-weight: 650 !important;
+}
+
+.acx-btn-primary {
+  height: clamp(58px, 6.4vh, 66px) !important;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, #009dff 0%, #126bff 52%, #1e45f5 100%) !important;
+  font-size: clamp(1.08rem, 1.25vw, 1.24rem) !important;
+  font-weight: 850 !important;
+  box-shadow: 0 18px 36px rgba(15, 91, 255, 0.36), inset 0 1px 0 rgba(255,255,255,0.28) !important;
+}
+
+.acx-divider {
+  margin: clamp(22px, 3vh, 34px) 0 clamp(18px, 2.5vh, 28px) !important;
+}
+
+.acx-divider::before {
+  background: linear-gradient(90deg, transparent, rgba(121, 145, 178, 0.42), transparent) !important;
+}
+
+.acx-divider span {
+  padding: 0 22px !important;
+  color: #43536f !important;
+  background: linear-gradient(90deg, rgba(238,247,255,0.96), rgba(235,246,255,0.96)) !important;
+  font-size: 0.93rem !important;
+}
+
+.acx-social-row {
+  gap: 16px !important;
+}
+
+.acx-social-btn {
+  height: clamp(54px, 5.8vh, 60px) !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: rgba(255,255,255,0.93) !important;
+  box-shadow: 0 16px 30px rgba(34, 74, 128, 0.08), inset 0 1px 0 rgba(255,255,255,0.96) !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+
+.acx-footer-link {
+  margin-top: clamp(28px, 5vh, 58px) !important;
+  font-size: 0.92rem !important;
+}
+
+/* Exact logo image support */
+.acx-logo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Responsive, no overlap */
+@media (max-width: 1380px) {
+  .acx-login-experience {
+    grid-template-columns: minmax(560px, 1fr) clamp(470px, 39vw, 550px) !important;
+    padding-left: 38px !important;
+    padding-right: 54px !important;
+    gap: 34px !important;
+  }
+
+  .acx-hero-copy {
+    width: min(510px, 64%) !important;
+    margin-bottom: -10px !important;
+  }
+
+  .acx-card-mastercard { right: 2.5% !important; }
+  
+}
+
+@media (max-width: 1199.98px) {
+  .acx-shell {
+    overflow-y: auto !important;
+  }
+
+  .acx-login-experience {
+    min-height: 100dvh !important;
+    grid-template-columns: 1fr !important;
+    padding: 32px 22px 42px !important;
+  }
+
+  .acx-visual-panel {
+    min-height: 690px !important;
+    max-width: 900px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .acx-form-card {
+    max-width: 620px !important;
+    min-height: auto !important;
+    max-height: none !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .acx-visual-panel {
+    min-height: 430px !important;
+  }
+
+  .acx-brand-lockup {
+    transform: scale(0.86) !important;
+    transform-origin: left top !important;
+  }
+
+  .acx-hero-copy {
+    top: 18% !important;
+    width: 100% !important;
+  }
+
+  .acx-headline {
+    font-size: clamp(2.05rem, 10vw, 3.2rem) !important;
+  }
+
+  .acx-brand-card,
+  .acx-shield-wrap,
+  .acx-node,
+  .acx-dot,
+  .acx-connecting-line,
+  .acx-trust-row {
+    display: none !important;
+  }
+
+  .acx-form-card {
+    padding: 30px 20px 28px !important;
+    border-radius: 26px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .acx-login-experience {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .acx-form-card {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .acx-social-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .acx-remember-row {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+}
+
+@keyframes acx-float-shield-final {
+  0%, 100% { transform: translateY(0) translateZ(0); }
+  50% { transform: translateY(-12px) translateZ(18px); }
+}
+
+/* ===========================================================
+   FIXED SMOOTH REGISTER FLIP ANIMATION
+   Important:
+   - Do NOT counter-rotate child content.
+   - The card makes a full right-side 360° flip.
+   - Final position remains readable, so register form is visible.
+   =========================================================== */
+
+.acx-form-panel {
+  perspective: 1600px !important;
+  transform-style: preserve-3d !important;
+}
+
+/* Base card transition */
+.acx-form-card {
+  transform-origin: center center !important;
+  transform-style: preserve-3d !important;
+  backface-visibility: visible !important;
+  will-change: transform, box-shadow, filter !important;
+
+  transition:
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.45s ease !important;
+}
+
+/* Login side */
+.acx-form-card:not(.acx-card-flipped) {
+  transform:
+    perspective(1600px)
+    rotateY(-2.5deg)
+    rotateX(0.8deg)
+    translateZ(0) !important;
+}
+
+/* Register side: full right flip but final readable */
+.acx-form-card.acx-card-flipped {
+  transform:
+    perspective(1600px)
+    rotateY(357.5deg)
+    rotateX(0.8deg)
+    translateZ(0) !important;
+
+  box-shadow:
+    0 46px 110px rgba(13, 74, 165, 0.30),
+    0 20px 44px rgba(10, 39, 100, 0.12),
+    -14px 0 48px rgba(255, 255, 255, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98),
+    inset 0 -24px 80px rgba(255,255,255,0.24) !important;
+}
+
+/* Content must stay normal/readable */
+.acx-form-card > * {
+  backface-visibility: visible !important;
+  transform: none !important;
+}
+
+/* Fade in whichever Angular form appears after authMode changes */
+.acx-form-card form {
+  animation: acx-form-content-in 0.42s ease 0.18s both;
+}
+
+.acx-form-card.acx-card-flipped .acx-form-title,
+.acx-form-card.acx-card-flipped .acx-form-sub,
+.acx-form-card.acx-card-flipped form {
+  animation: acx-form-content-in 0.42s ease 0.18s both;
+}
+
+@keyframes acx-form-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Optional: cleaner flip effect during the click */
+.acx-form-card.acx-card-flipped::before {
+  opacity: 0.92;
+}
+
+/* Mobile: no 3D rotation, just smooth content reveal */
+@media (max-width: 767.98px) {
+  .acx-form-panel {
+    perspective: none !important;
+  }
+
+  .acx-form-card,
+  .acx-form-card:not(.acx-card-flipped),
+  .acx-form-card.acx-card-flipped {
+    transform: none !important;
+    transition:
+      opacity 0.35s ease,
+      box-shadow 0.35s ease !important;
+  }
+
+  .acx-form-card form {
+    animation: acx-form-content-in 0.35s ease both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acx-form-card,
+  .acx-form-card form,
+  .acx-form-card.acx-card-flipped .acx-form-title,
+  .acx-form-card.acx-card-flipped .acx-form-sub {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ===========================================================
+   INPUT CLICK + PIN/OTP BOXES + FORM HEIGHT FIX
+   Paste at the END of login.scss.
+
+   Fixes:
+   1) Register link disappearing when validation warnings appear.
+   2) Whole input box is clickable/focusable.
+   3) PIN / Confirm PIN / OTP show exact 6 boxes inside the input.
+   4) Confirm PIN mismatch can show while typing using the HTML condition.
+   =========================================================== */
+
+/* Keep form inside viewport and stop clipping footer links */
+.acx-form-card {
+  min-height: auto !important;
+  max-height: calc(100dvh - 42px) !important;
+  overflow: visible !important;
+  padding:
+    clamp(24px, 3.8vh, 38px)
+    clamp(30px, 4.2vw, 58px)
+    clamp(22px, 3.2vh, 34px) !important;
+
+  /* remove permanent 3D skew from final state, because it breaks input hit-testing */
+  transform: none !important;
+}
+
+/* Keep the form visually compact when error messages are visible */
+.acx-card-logo-box {
+  width: clamp(58px, 5vw, 76px) !important;
+  height: clamp(58px, 5vw, 76px) !important;
+  margin: 0 auto clamp(14px, 2vh, 22px) !important;
+  border-radius: 17px !important;
+}
+
+.acx-card-x-logo {
+  width: clamp(32px, 3vw, 42px) !important;
+  height: clamp(32px, 3vw, 42px) !important;
+}
+
+.acx-form-title {
+  margin: 6px 0 4px !important;
+  font-size: clamp(1.55rem, 2.2vw, 2.15rem) !important;
+}
+
+.acx-form-sub {
+  margin-bottom: clamp(14px, 2vh, 20px) !important;
+  line-height: 1.45 !important;
+}
+
+.acx-form-card .mb-3 {
+  margin-bottom: clamp(10px, 1.7vh, 16px) !important;
+}
+
+.acx-form-card .mb-2 {
+  margin-bottom: clamp(8px, 1.3vh, 12px) !important;
+}
+
+.acx-error {
+  margin-top: 6px !important;
+  font-size: clamp(0.72rem, 0.9vw, 0.82rem) !important;
+  line-height: 1.25 !important;
+}
+
+.acx-remember-row {
+  margin-top: 2px !important;
+  margin-bottom: clamp(12px, 1.8vh, 16px) !important;
+}
+
+.acx-btn-primary {
+  height: clamp(48px, 5.2vh, 56px) !important;
+}
+
+.acx-footer-link {
+  margin-top: clamp(10px, 1.7vh, 16px) !important;
+  padding-bottom: 2px !important;
+}
+
+/* Whole input box must be clickable */
+.acx-input-group {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  cursor: text !important;
+  z-index: 20 !important;
+}
+
+.acx-input-group .form-control {
+  position: relative !important;
+  z-index: 5 !important;
+  display: block !important;
+  width: 100% !important;
+  cursor: text !important;
+  pointer-events: auto !important;
+  user-select: text !important;
+  caret-color: #1d4ed8 !important;
+  touch-action: manipulation !important;
+}
+
+.acx-input-icon {
+  pointer-events: none !important;
+  z-index: 7 !important;
+}
+
+.acx-toggle-eye {
+  z-index: 9 !important;
+  pointer-events: auto !important;
+}
+
+/*
+  Exact 6 boxes inside OTP/PIN inputs.
+  The input remains the real Angular reactive form control.
+*/
+/* ── DIGIT BOX INPUTS (OTP / PIN / Confirm PIN) ─── */
+.acx-digit-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.acx-digit-box {
+  flex: 1;
+  min-width: 0;
+  height: 54px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(91, 119, 161, 0.28);
+  background: rgba(255, 255, 255, 0.94);
+  color: #0d183c;
+  font-size: 1.3rem;
+  font-weight: 800;
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  caret-color: #2563eb;
+  cursor: text;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.acx-digit-box:hover {
+  border-color: rgba(37, 99, 235, 0.35);
+  background: #fff;
+}
+
+.acx-digit-box:focus {
+  border-color: rgba(37, 99, 235, 0.65);
+  box-shadow: 0 0 0 4px rgba(29, 109, 255, 0.12),
+              0 14px 34px rgba(36, 82, 140, 0.10);
+  background: #ffffff;
+}
+
+.acx-digit-box.is-filled {
+  border-color: rgba(37, 99, 235, 0.42);
+  background: rgba(239, 246, 255, 0.7);
+}
+
+.acx-digit-box.is-error {
+  border-color: rgba(239, 68, 68, 0.62);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.08);
+}
+
+/* OTP has no eye button, so it gets more room and centered boxes */
+.acx-otp-boxes {
+  --code-left-pad: 52px;
+  --code-right-pad: 18px;
+}
+
+/* PIN inputs have the eye button on right */
+.acx-pin-boxes {
+  --code-left-pad: 52px;
+  --code-right-pad: 58px;
+}
+
+/* Hide placeholder on boxed inputs so the boxes are clean */
+.acx-code-input::placeholder {
+  color: transparent !important;
+}
+
+/* Focus state for the exact 6 boxes */
+.acx-code-input:focus {
+  border-color: rgba(37, 99, 235, 0.55) !important;
+  background-color: #ffffff !important;
+  box-shadow:
+    0 14px 34px rgba(36, 82, 140, 0.12),
+    0 0 0 4px rgba(29, 109, 255, 0.10),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+
+/* Invalid / mismatch state */
+.acx-code-input[aria-invalid="true"] {
+  border-color: rgba(239, 68, 68, 0.62) !important;
+  box-shadow:
+    0 12px 28px rgba(239, 68, 68, 0.10),
+    0 0 0 4px rgba(239, 68, 68, 0.08) !important;
+}
+
+/* Smaller screens: keep six boxes fitting inside the input */
+@media (max-width: 1399.98px) {
+  .acx-code-input {
+    --code-box-size: 30px;
+    --code-box-gap: 6px;
+    font-size: 0.98rem !important;
+    letter-spacing: 0.68em !important;
+  }
+
+  .acx-pin-boxes {
+    --code-left-pad: 48px;
+    --code-right-pad: 52px;
+  }
+
+  .acx-otp-boxes {
+    --code-left-pad: 48px;
+    --code-right-pad: 16px;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .acx-form-card {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .acx-code-input {
+    --code-box-size: 26px;
+    --code-box-gap: 5px;
+    font-size: 0.88rem !important;
+    letter-spacing: 0.48em !important;
+  }
+
+  .acx-pin-boxes {
+    --code-left-pad: 44px;
+    --code-right-pad: 48px;
+  }
+
+  .acx-otp-boxes {
+    --code-left-pad: 44px;
+    --code-right-pad: 14px;
+  }
+
+  .acx-form-card {
+    padding: 24px 16px 24px !important;
+  }
+}

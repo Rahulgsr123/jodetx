@@ -1,0 +1,2698 @@
+/* ===========================================================
+   AcquirerX Login — Video Reference Style
+   Full-page horizontal screen slider + one real backend form card.
+   Replace only login.html/login.scss. Keep TS unchanged.
+   =========================================================== */
+
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100dvh;
+}
+
+.acx-auth-slider {
+  --acx-blue: #2563eb;
+  --acx-blue-deep: #1d4ed8;
+  --acx-cyan: #20d6ff;
+  --acx-coral: #ff5f73;
+  --acx-coral-deep: #f43f5e;
+  --acx-ink: #121a35;
+  --acx-muted: #6b7894;
+  --acx-border: rgba(130, 150, 180, 0.22);
+  --acx-input-bg: #f8fafc;
+  --acx-input-border: rgba(148, 163, 184, 0.32);
+  --acx-danger: #ef4444;
+
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--acx-ink);
+  background: #f6fbff;
+}
+
+/* Full-page sliding strip */
+.acx-screen-track {
+  position: absolute;
+  inset: 0;
+  width: 300vw;
+  height: 100%;
+  display: flex;
+  animation: acx-whole-page-slide 18s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+  will-change: transform;
+}
+
+.acx-auth-screen {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  flex: 0 0 100vw;
+  overflow: hidden;
+}
+
+/* First screen: dark blue like the video opening */
+.acx-screen-one {
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(49, 211, 255, 0.34), transparent 28%),
+    radial-gradient(circle at 66% 56%, rgba(27, 107, 255, 0.38), transparent 36%),
+    linear-gradient(135deg, #081946 0%, #0c3376 44%, #109ac7 100%);
+}
+
+.acx-screen-one::after,
+.acx-screen-two::after,
+.acx-screen-three::after {
+  content: "";
+  position: absolute;
+  left: -8vw;
+  right: -8vw;
+  bottom: -2px;
+  height: 158px;
+  background: linear-gradient(90deg, #1d4ed8 0%, #0ea5e9 58%, #22d3ee 100%);
+  clip-path: polygon(0 58%, 12% 44%, 26% 57%, 40% 37%, 55% 55%, 70% 36%, 86% 54%, 100% 42%, 100% 100%, 0 100%);
+  opacity: 0.96;
+  animation: acx-bottom-wave 2.5s ease-in-out infinite;
+}
+
+.acx-screen-two,
+.acx-screen-three {
+  background:
+    radial-gradient(circle at 18% 10%, rgba(186, 230, 253, 0.5), transparent 30%),
+    radial-gradient(circle at 58% 74%, rgba(37, 99, 235, 0.12), transparent 34%),
+    linear-gradient(140deg, #ffffff 0%, #f6fbff 52%, #e7f3ff 100%);
+}
+
+.acx-screen-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: clamp(34px, 5vh, 58px) calc(42vw + 34px) clamp(44px, 5vh, 60px) clamp(46px, 5vw, 78px);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-items: center;
+}
+
+.acx-top-brand {
+  align-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+}
+
+.acx-logo-badge,
+.acx-brand-mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  font-size: 0.92rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255,255,255,0.28);
+  backdrop-filter: blur(16px);
+}
+
+.light-brand .acx-logo-badge,
+.acx-brand-mark {
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+}
+
+.acx-company {
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.light-brand .acx-company,
+.acx-mobile-logo .acx-company {
+  color: #8aa0b8;
+}
+
+.acx-product-name {
+  margin-top: 3px;
+  font-size: 1.08rem;
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.light-brand .acx-product-name,
+.acx-mobile-logo .acx-product-name {
+  color: var(--acx-ink);
+}
+
+/* Screen 1 copy */
+.acx-intro-copy {
+  align-self: center;
+  max-width: 720px;
+  transform: translateY(16px);
+}
+
+.acx-small-label {
+  display: inline-flex;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.82);
+  border: 1px solid rgba(255,255,255,0.20);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px);
+}
+
+.acx-intro-copy h1 {
+  margin: 22px 0 18px;
+  max-width: 780px;
+  color: #ffffff;
+  font-size: clamp(2.7rem, 5.3vw, 5.8rem);
+  line-height: 0.96;
+  letter-spacing: -0.085em;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.acx-intro-copy p {
+  max-width: 560px;
+  margin: 0;
+  color: rgba(255,255,255,0.78);
+  font-size: clamp(0.92rem, 1.1vw, 1.1rem);
+  line-height: 1.72;
+  font-weight: 520;
+}
+
+/* Light screens copy */
+.acx-feature-copy {
+  align-self: center;
+  max-width: 560px;
+  transform: translateY(18px);
+}
+
+.acx-section-number {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  font-weight: 900;
+}
+
+.acx-feature-copy h2 {
+  margin: 22px 0 14px;
+  color: #101936;
+  font-size: clamp(2.35rem, 4.3vw, 4.8rem);
+  line-height: 1;
+  letter-spacing: -0.085em;
+  font-weight: 900;
+}
+
+.acx-feature-copy p {
+  max-width: 520px;
+  color: #5f6f8a;
+  font-size: clamp(0.92rem, 1.05vw, 1.06rem);
+  line-height: 1.72;
+  font-weight: 520;
+}
+
+.acx-feature-list {
+  display: grid;
+  gap: 11px;
+  margin-top: 24px;
+}
+
+.acx-feature-list div {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  width: max-content;
+  max-width: 100%;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: #1e293b;
+  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(255,255,255,0.94);
+  box-shadow: 0 10px 28px rgba(37,99,235,0.08);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.acx-feature-list i {
+  color: #2563eb;
+}
+
+/* Illustrations */
+.acx-video-illustration,
+.acx-flat-illustration,
+.acx-analytics-illustration {
+  position: absolute;
+  z-index: 3;
+  right: calc(42vw + 48px);
+  bottom: 106px;
+  width: min(390px, 31vw);
+  height: min(340px, 43vh);
+  pointer-events: none;
+}
+
+.acx-main-window,
+.acx-laptop,
+.acx-analytics-card,
+.acx-person-card,
+.acx-mini-widget,
+.acx-floating-tag,
+.acx-ring-widget {
+  position: absolute;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(255,255,255,0.92);
+  box-shadow: 0 24px 56px rgba(0, 58, 150, 0.16);
+  backdrop-filter: blur(18px);
+}
+
+.acx-main-window {
+  left: 18%;
+  top: 18%;
+  width: 250px;
+  height: 190px;
+  padding: 16px;
+  transform: rotate(-3deg);
+  animation: acx-float-one 5.2s ease-in-out infinite;
+}
+
+.acx-window-top {
+  display: flex;
+  gap: 6px;
+}
+
+.acx-window-top span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(37,99,235,0.26);
+}
+
+.acx-window-graph {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  height: 86px;
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(37,99,235,0.08);
+}
+
+.acx-window-graph i {
+  flex: 1;
+  border-radius: 999px 999px 8px 8px;
+  background: linear-gradient(180deg, #22d3ee, #2563eb);
+}
+
+.acx-window-graph i:nth-child(1) { height: 44%; }
+.acx-window-graph i:nth-child(2) { height: 78%; }
+.acx-window-graph i:nth-child(3) { height: 58%; }
+.acx-window-graph i:nth-child(4) { height: 88%; }
+
+.acx-window-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.acx-window-list span {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(37,99,235,0.13);
+}
+
+.acx-person-card {
+  width: 86px;
+  height: 116px;
+  padding: 12px;
+}
+
+.person-one { left: 0; bottom: 32px; animation: acx-float-two 5s ease-in-out infinite; }
+.person-two { right: 4px; top: 14px; animation: acx-float-two 5s ease-in-out infinite -1.4s; }
+
+.acx-person-card span {
+  display: block;
+  width: 38px;
+  height: 38px;
+  margin: 4px auto 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22d3ee, #2563eb);
+}
+
+.acx-person-card i {
+  display: block;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(37,99,235,0.14);
+}
+
+.acx-floating-tag {
+  padding: 10px 14px;
+  color: #1e293b;
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.tag-one { left: 52%; top: 0; animation: acx-float-two 5.4s ease-in-out infinite -0.8s; }
+.tag-two { left: 34%; bottom: 0; animation: acx-float-two 5.4s ease-in-out infinite -1.8s; }
+
+.acx-laptop {
+  left: 10%;
+  top: 18%;
+  width: 300px;
+  height: 210px;
+  padding: 18px;
+  transform: rotate(-2deg);
+  animation: acx-float-one 5.5s ease-in-out infinite;
+}
+
+.acx-laptop-header {
+  height: 14px;
+  width: 46%;
+  border-radius: 999px;
+  background: rgba(37,99,235,0.15);
+}
+
+.acx-laptop-chart {
+  height: 90px;
+  margin-top: 18px;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(34,211,238,0.18), rgba(37,99,235,0.12)),
+    repeating-linear-gradient(90deg, transparent 0 28px, rgba(37,99,235,0.08) 29px 30px);
+}
+
+.acx-laptop-lines {
+  display: grid;
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.acx-laptop-lines span {
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(37,99,235,0.12);
+}
+
+.acx-mini-widget {
+  padding: 11px 14px;
+  color: #1d4ed8;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.widget-one { right: 0; top: 28px; animation: acx-float-two 5s ease-in-out infinite -1s; }
+.widget-two { left: 0; bottom: 34px; animation: acx-float-two 5s ease-in-out infinite -2s; }
+.widget-three { right: 2%; bottom: 16%; animation: acx-float-two 5s ease-in-out infinite -1.3s; }
+
+.acx-analytics-card {
+  left: 8%;
+  top: 16%;
+  width: 290px;
+  height: 220px;
+  padding: 20px;
+  animation: acx-float-one 5.4s ease-in-out infinite;
+}
+
+.acx-analytics-bars {
+  display: flex;
+  align-items: end;
+  gap: 14px;
+  height: 112px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(37,99,235,0.08);
+}
+
+.acx-analytics-bars span {
+  flex: 1;
+  border-radius: 999px 999px 8px 8px;
+  background: linear-gradient(180deg, #22d3ee, #2563eb);
+}
+
+.acx-analytics-bars span:nth-child(1) { height: 48%; }
+.acx-analytics-bars span:nth-child(2) { height: 82%; }
+.acx-analytics-bars span:nth-child(3) { height: 62%; }
+.acx-analytics-bars span:nth-child(4) { height: 92%; }
+
+.acx-analytics-line {
+  height: 12px;
+  width: 72%;
+  margin-top: 20px;
+  border-radius: 999px;
+  background: rgba(37,99,235,0.13);
+}
+
+.acx-ring-widget {
+  right: 4%;
+  top: 8%;
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+  color: #1d4ed8;
+  font-size: 1.2rem;
+  font-weight: 900;
+  background:
+    radial-gradient(circle at center, #fff 0 48%, transparent 49%),
+    conic-gradient(#2563eb 0 84%, rgba(37,99,235,0.12) 85% 100%);
+}
+
+/* Real form card stage */
+.acx-form-stage {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  right: clamp(44px, 5vw, 78px);
+  width: min(430px, 34vw);
+  transform: translateY(-50%);
+}
+
+.acx-form-card {
+  position: relative;
+  width: 100%;
+  padding: clamp(26px, 3vh, 36px) clamp(24px, 2.3vw, 32px);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.98);
+  border: 1px solid rgba(226,232,240,0.92);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.16);
+}
+
+.acx-product-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.07);
+  color: #1d4ed8;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.acx-stepdots {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.acx-stepdots span {
+  width: 20px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(37,99,235,0.13);
+}
+
+.acx-stepdots span.is-active {
+  background: #2563eb;
+}
+
+.acx-form-title {
+  color: #111827;
+  font-size: 1.58rem;
+  font-weight: 850;
+  letter-spacing: -0.045em;
+}
+
+.acx-form-sub {
+  color: #64748b;
+  font-size: 0.88rem;
+  line-height: 1.56;
+}
+
+.acx-form-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #334155;
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+.acx-input-group {
+  position: relative;
+}
+
+.acx-input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.acx-input-group .form-control {
+  width: 100%;
+  height: 49px;
+  padding-left: 42px;
+  padding-right: 42px;
+  border-radius: 10px;
+  border: 1px solid var(--acx-input-border);
+  background: var(--acx-input-bg);
+  color: #111827;
+  font-size: 0.92rem;
+  font-weight: 560;
+  box-shadow: none;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.acx-input-group .form-control:focus {
+  border-color: rgba(37, 99, 235, 0.46);
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.08);
+  background: #ffffff;
+}
+
+.acx-input-group .form-control::placeholder {
+  color: rgba(100, 116, 139, 0.55);
+}
+
+.acx-toggle-eye {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  z-index: 4;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #94a3b8;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acx-toggle-eye:hover {
+  color: #2563eb;
+  background: rgba(37,99,235,0.07);
+}
+
+.acx-error {
+  margin-top: 6px;
+  color: var(--acx-danger);
+  font-size: 0.73rem;
+  font-weight: 650;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.acx-info {
+  color: #2563eb;
+  font-size: 0.76rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.acx-btn-primary {
+  width: 100%;
+  height: 50px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--acx-coral) 0%, var(--acx-coral-deep) 100%);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 850;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 14px 30px rgba(244,63,94,0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.acx-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 38px rgba(244,63,94,0.32);
+}
+
+.acx-btn-primary:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.acx-spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.32);
+  border-top-color: #ffffff;
+  animation: acx-spin 0.7s linear infinite;
+}
+
+.acx-muted-text {
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.acx-link-btn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: #2563eb;
+  font-size: 0.82rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.acx-link-btn:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.acx-back-btn {
+  border: 1px solid rgba(37,99,235,0.12);
+  border-radius: 10px;
+  background: rgba(37,99,235,0.06);
+  color: #64748b;
+  padding: 7px 12px;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.acx-slider-dots {
+  position: absolute;
+  z-index: 12;
+  left: clamp(46px, 5vw, 78px);
+  bottom: 34px;
+  display: flex;
+  gap: 9px;
+}
+
+.acx-slider-dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.42);
+  animation: acx-video-dot 18s infinite;
+}
+
+.acx-slider-dots span:nth-child(2) { animation-delay: 6s; }
+.acx-slider-dots span:nth-child(3) { animation-delay: 12s; }
+
+/* Animations */
+@keyframes acx-whole-page-slide {
+  0%, 25% { transform: translateX(0); }
+  32%, 58% { transform: translateX(-100vw); }
+  65%, 91% { transform: translateX(-200vw); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes acx-video-dot {
+  0%, 25% { width: 30px; background: #ffffff; }
+  28%, 100% { width: 9px; background: rgba(255,255,255,0.42); }
+}
+
+@keyframes acx-bottom-wave {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(28px); }
+}
+
+@keyframes acx-float-one {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-12px) rotate(-3deg); }
+}
+
+@keyframes acx-float-two {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes acx-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Desktop non-scroll */
+@media (min-width: 992px) {
+  .acx-auth-slider {
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+/* Laptop compression */
+@media (min-width: 992px) and (max-width: 1300px) {
+  .acx-screen-content {
+    padding-left: 42px;
+    padding-right: calc(42vw + 20px);
+  }
+
+  .acx-intro-copy h1,
+  .acx-feature-copy h2 {
+    font-size: clamp(2.25rem, 4.5vw, 4.2rem);
+  }
+
+  .acx-video-illustration,
+  .acx-flat-illustration,
+  .acx-analytics-illustration {
+    right: calc(42vw + 18px);
+    width: 300px;
+  }
+
+  .acx-form-stage {
+    right: 34px;
+    width: min(395px, 35vw);
+  }
+
+  .acx-form-card {
+    padding: 26px 24px;
+  }
+}
+
+@media (min-width: 992px) and (max-height: 760px) {
+  .acx-screen-content {
+    padding-top: 28px;
+    padding-bottom: 34px;
+  }
+
+  .acx-intro-copy h1,
+  .acx-feature-copy h2 {
+    margin-top: 16px;
+    margin-bottom: 12px;
+    font-size: clamp(2rem, 4vw, 3.75rem);
+  }
+
+  .acx-intro-copy p,
+  .acx-feature-copy p {
+    font-size: 0.86rem;
+    line-height: 1.56;
+  }
+
+  .acx-video-illustration,
+  .acx-flat-illustration,
+  .acx-analytics-illustration {
+    height: 280px;
+    bottom: 80px;
+  }
+
+  .acx-form-card {
+    padding: 22px 22px;
+  }
+
+  .acx-form-sub {
+    margin-bottom: 0.9rem !important;
+  }
+
+  .acx-input-group .form-control,
+  .acx-btn-primary {
+    height: 46px;
+  }
+}
+
+/* Tablet/mobile: form-first, no desktop slider */
+@media (max-width: 991.98px) {
+  .acx-auth-slider {
+    min-height: 100dvh;
+    height: auto;
+    overflow-y: auto;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(186,230,253,0.55), transparent 35%),
+      linear-gradient(180deg, #ffffff, #eef7ff);
+  }
+
+  .acx-screen-track,
+  .acx-slider-dots {
+    display: none;
+  }
+
+  .acx-form-stage {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    min-height: 100dvh;
+    transform: none;
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .acx-form-card {
+    width: min(440px, 100%);
+  }
+
+  .acx-mobile-logo {
+    display: block !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .acx-form-stage {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .acx-form-card {
+    border-radius: 16px;
+    padding: 24px 18px;
+  }
+
+  .acx-form-title {
+    font-size: 1.34rem;
+  }
+
+  .acx-input-group .form-control,
+  .acx-btn-primary {
+    height: 47px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acx-screen-track,
+  .acx-screen-one::after,
+  .acx-screen-two::after,
+  .acx-screen-three::after,
+  .acx-main-window,
+  .acx-person-card,
+  .acx-floating-tag,
+  .acx-laptop,
+  .acx-mini-widget,
+  .acx-analytics-card,
+  .acx-slider-dots span {
+    animation: none !important;
+  }
+}
+
+
+/* ===========================================================
+   FINAL PREMIUM CARD + SPEED FIX
+   Change --slide-duration below to control full slider speed.
+   12s = 4 seconds per screen. For faster use 9s, slower use 15s.
+   =========================================================== */
+
+.acx-auth-slider {
+  --slide-duration: 12s;
+}
+
+/* Apply the new speed everywhere */
+.acx-screen-track {
+  animation-duration: var(--slide-duration) !important;
+}
+
+.acx-slider-dots span {
+  animation-duration: var(--slide-duration) !important;
+}
+
+.acx-slider-dots span:nth-child(2) {
+  animation-delay: calc(var(--slide-duration) / 3) !important;
+}
+
+.acx-slider-dots span:nth-child(3) {
+  animation-delay: calc((var(--slide-duration) / 3) * 2) !important;
+}
+
+/* Faster, cleaner slide timing */
+@keyframes acx-whole-page-slide {
+  0%, 27% {
+    transform: translateX(0);
+  }
+
+  33%, 60% {
+    transform: translateX(-100vw);
+  }
+
+  66%, 93% {
+    transform: translateX(-200vw);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes acx-video-dot {
+  0%, 27% {
+    width: 30px;
+    background: #ffffff;
+  }
+
+  30%, 100% {
+    width: 9px;
+    background: rgba(255,255,255,0.42);
+  }
+}
+
+/* Fix first-screen overlap by reserving a clear text zone */
+.acx-screen-one .acx-screen-content {
+  padding-right: calc(45vw + 28px) !important;
+}
+
+.acx-intro-copy {
+  max-width: min(650px, 46vw) !important;
+  transform: translateY(-8px) !important;
+  z-index: 8;
+}
+
+.acx-intro-copy h1 {
+  max-width: 620px !important;
+  font-size: clamp(2.25rem, 4.35vw, 4.85rem) !important;
+  line-height: 0.98 !important;
+}
+
+.acx-intro-copy p {
+  max-width: 500px !important;
+}
+
+/* Move first screen card to a safe premium visual zone */
+.acx-illustration-one {
+  right: calc(43vw + 16px) !important;
+  bottom: 76px !important;
+  width: min(400px, 30vw) !important;
+  height: min(315px, 39vh) !important;
+  z-index: 4;
+}
+
+/* Remove old irrelevant first-screen elements if any cached class remains */
+.acx-person-card,
+.acx-main-window,
+.acx-floating-tag {
+  display: none !important;
+}
+
+/* Premium common card styling */
+.acx-payment-hub,
+.acx-pos-device,
+.acx-premium-chip,
+.acx-onboarding-board,
+.acx-command-card,
+.acx-mini-widget,
+.acx-ring-widget {
+  border: 1px solid rgba(255,255,255,0.88);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.94), rgba(236,247,255,0.82));
+  box-shadow:
+    0 28px 70px rgba(0, 42, 110, 0.20),
+    0 10px 26px rgba(2, 26, 73, 0.10),
+    inset 0 1px 0 rgba(255,255,255,0.98);
+  backdrop-filter: blur(22px);
+}
+
+/* Screen 1 premium acquiring visual */
+.acx-payment-hub {
+  position: absolute;
+  left: 16%;
+  top: 10%;
+  width: 270px;
+  min-height: 218px;
+  border-radius: 26px;
+  padding: 18px;
+  animation: acx-premium-card-float 4.8s ease-in-out infinite;
+}
+
+.acx-hub-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #102047;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hub-dot,
+.command-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #22c55e;
+  box-shadow: 0 0 0 7px rgba(34, 197, 94, 0.13);
+}
+
+.acx-hub-amount {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(37,99,235,0.10), rgba(34,211,238,0.12));
+}
+
+.acx-hub-amount small {
+  display: block;
+  color: #64748b;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.acx-hub-amount strong {
+  display: block;
+  margin-top: 5px;
+  color: #1d4ed8;
+  font-size: 1.82rem;
+  letter-spacing: -0.06em;
+  font-weight: 950;
+}
+
+.acx-hub-flow {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.acx-hub-flow span {
+  color: #334155;
+  font-size: 0.66rem;
+  font-weight: 900;
+}
+
+.acx-hub-flow i {
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(37,99,235,0.1), #20d6ff, rgba(37,99,235,0.1));
+  animation: acx-flow-light 1.8s ease-in-out infinite;
+}
+
+.acx-hub-bars {
+  display: flex;
+  align-items: end;
+  gap: 9px;
+  height: 48px;
+  margin-top: 18px;
+}
+
+.acx-hub-bars b {
+  flex: 1;
+  border-radius: 999px 999px 7px 7px;
+  background: linear-gradient(180deg, #20d6ff, #2563eb);
+  animation: acx-bar-wave 1.7s ease-in-out infinite;
+}
+
+.acx-hub-bars b:nth-child(1) { height: 42%; }
+.acx-hub-bars b:nth-child(2) { height: 80%; animation-delay: -0.25s; }
+.acx-hub-bars b:nth-child(3) { height: 58%; animation-delay: -0.5s; }
+.acx-hub-bars b:nth-child(4) { height: 92%; animation-delay: -0.75s; }
+
+.acx-pos-device {
+  position: absolute;
+  right: 2%;
+  bottom: 10%;
+  width: 132px;
+  height: 180px;
+  border-radius: 30px;
+  padding: 14px;
+  animation: acx-premium-card-float 5.2s ease-in-out infinite -1s;
+}
+
+.acx-pos-screen {
+  height: 96px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  background: linear-gradient(145deg, #0f2d69, #2563eb);
+}
+
+.acx-pos-screen i {
+  font-size: 1.6rem;
+}
+
+.acx-pos-screen span {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 850;
+}
+
+.acx-pos-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin-top: 13px;
+}
+
+.acx-pos-keys i {
+  height: 18px;
+  border-radius: 7px;
+  background: rgba(37,99,235,0.12);
+}
+
+.acx-premium-chip {
+  position: absolute;
+  z-index: 7;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 13px;
+  border-radius: 999px;
+  color: #102047;
+  font-size: 0.72rem;
+  font-weight: 900;
+  animation: acx-chip-orbit 4.8s ease-in-out infinite;
+}
+
+.acx-premium-chip i {
+  color: #2563eb;
+}
+
+.chip-approved {
+  left: 0;
+  bottom: 18%;
+}
+
+.chip-risk {
+  right: 0;
+  top: 5%;
+  animation-delay: -1s;
+}
+
+.chip-settle {
+  left: 22%;
+  bottom: 0;
+  animation-delay: -2s;
+}
+
+/* Screen 2 onboarding board */
+.acx-onboarding-board {
+  position: absolute;
+  left: 8%;
+  top: 12%;
+  width: 310px;
+  border-radius: 26px;
+  padding: 20px;
+  animation: acx-premium-card-float 5s ease-in-out infinite;
+}
+
+.board-header,
+.command-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #102047;
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.board-header span {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #2563eb;
+  box-shadow: 0 0 0 7px rgba(37,99,235,0.12);
+}
+
+.merchant-profile-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 20px;
+  background: rgba(37,99,235,0.07);
+}
+
+.merchant-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 50% 35%, #fff 0 16%, transparent 17%),
+    linear-gradient(135deg, #20d6ff, #2563eb);
+}
+
+.merchant-profile-row strong,
+.merchant-profile-row small {
+  display: block;
+}
+
+.merchant-profile-row strong {
+  color: #102047;
+  font-size: 0.86rem;
+  font-weight: 950;
+}
+
+.merchant-profile-row small {
+  color: #64748b;
+  font-size: 0.68rem;
+  font-weight: 750;
+}
+
+.kyc-check-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.kyc-check-list div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  color: #334155;
+  background: rgba(255,255,255,0.62);
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.kyc-check-list i {
+  color: #2563eb;
+}
+
+.route-line-one {
+  position: absolute;
+  z-index: 1;
+  left: 23%;
+  bottom: 20%;
+  width: 220px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.35), transparent);
+  transform: rotate(-18deg);
+  animation: acx-flow-light 2s ease-in-out infinite;
+}
+
+/* Screen 3 settlement command card */
+.acx-command-card {
+  position: absolute;
+  left: 7%;
+  top: 10%;
+  width: 320px;
+  border-radius: 28px;
+  padding: 20px;
+  animation: acx-premium-card-float 5.2s ease-in-out infinite;
+}
+
+.command-chart {
+  display: flex;
+  align-items: end;
+  gap: 11px;
+  height: 112px;
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(37,99,235,0.07);
+}
+
+.command-chart b {
+  flex: 1;
+  border-radius: 999px 999px 8px 8px;
+  background: linear-gradient(180deg, #20d6ff, #2563eb);
+  animation: acx-bar-wave 1.8s ease-in-out infinite;
+}
+
+.command-chart b:nth-child(1) { height: 46%; }
+.command-chart b:nth-child(2) { height: 70%; animation-delay: -0.2s; }
+.command-chart b:nth-child(3) { height: 90%; animation-delay: -0.4s; }
+.command-chart b:nth-child(4) { height: 58%; animation-delay: -0.6s; }
+.command-chart b:nth-child(5) { height: 78%; animation-delay: -0.8s; }
+
+.command-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  padding: 11px 13px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.64);
+}
+
+.command-row span {
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.command-row strong {
+  color: #1d4ed8;
+  font-size: 0.74rem;
+  font-weight: 950;
+}
+
+.widget-four {
+  left: 1%;
+  bottom: 20%;
+  animation: acx-chip-orbit 5s ease-in-out infinite -2.4s;
+}
+
+/* Upgrade existing widgets */
+.acx-mini-widget,
+.acx-ring-widget {
+  animation: acx-chip-orbit 4.8s ease-in-out infinite;
+}
+
+.acx-ring-widget {
+  box-shadow:
+    0 26px 62px rgba(37,99,235,0.16),
+    inset 0 1px 0 rgba(255,255,255,1);
+}
+
+@keyframes acx-premium-card-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translate3d(0, -14px, 22px) rotate(-2deg);
+  }
+}
+
+@keyframes acx-chip-orbit {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(8px, -10px, 20px);
+  }
+}
+
+@keyframes acx-flow-light {
+  0%, 100% {
+    opacity: 0.35;
+    filter: drop-shadow(0 0 0 rgba(32,214,255,0));
+  }
+
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(32,214,255,0.55));
+  }
+}
+
+@keyframes acx-bar-wave {
+  0%, 100% {
+    transform: scaleY(0.72);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* Keep first screen safe on medium laptops too */
+@media (min-width: 992px) and (max-width: 1300px) {
+  .acx-screen-one .acx-screen-content {
+    padding-right: calc(45vw + 16px) !important;
+  }
+
+  .acx-intro-copy {
+    max-width: 45vw !important;
+  }
+
+  .acx-intro-copy h1 {
+    font-size: clamp(2rem, 4vw, 3.9rem) !important;
+  }
+
+  .acx-illustration-one {
+    right: calc(42vw + 0px) !important;
+    width: min(330px, 27vw) !important;
+    bottom: 68px !important;
+  }
+
+  .acx-payment-hub {
+    width: 238px;
+  }
+
+  .acx-pos-device {
+    width: 112px;
+    height: 156px;
+  }
+}
+
+@media (min-width: 992px) and (max-height: 760px) {
+  .acx-illustration-one {
+    bottom: 56px !important;
+    height: 260px !important;
+  }
+
+  .acx-payment-hub {
+    top: 6%;
+    min-height: 190px;
+  }
+
+  .acx-pos-device {
+    bottom: 4%;
+  }
+
+  .acx-hub-amount strong {
+    font-size: 1.45rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acx-payment-hub,
+  .acx-pos-device,
+  .acx-premium-chip,
+  .acx-onboarding-board,
+  .acx-command-card,
+  .command-chart b,
+  .acx-hub-bars b,
+  .route-line-one {
+    animation: none !important;
+  }
+}
+
+
+/* ===========================================================
+   FINAL VISUAL SIZE / POSITION CONTROL
+   User request:
+   - Make fintech cards somewhat smaller
+   - Move them somewhat right
+   - Remove bottom-left changing dots
+   =========================================================== */
+
+.acx-auth-slider {
+  /*
+    SLIDER SPEED:
+    9s  = fast
+    12s = current balanced speed
+    15s = slower
+    18s = old slow speed
+  */
+  --slide-duration: 12s;
+
+  /*
+    VISUAL POSITION:
+    Lower value = cards move RIGHT
+    Higher value = cards move LEFT
+
+    Good values:
+    36vw = more right
+    38vw = current
+    40vw = slightly left
+    43vw = old position
+  */
+  --visual-offset-right: 40vw !important;
+}
+
+/* remove changing dots from left-bottom */
+.acx-slider-dots {
+  display: none !important;
+}
+
+/* keep slider speed controlled from one place */
+.acx-screen-track {
+  animation-duration: var(--slide-duration) !important;
+}
+
+/* Common visual groups: smaller and shifted right */
+.acx-video-illustration,
+.acx-flat-illustration,
+.acx-analytics-illustration {
+  right: calc(var(--visual-offset-right) + 10px) !important;
+  width: min(340px, 26vw) !important;
+  height: min(292px, 36vh) !important;
+}
+
+/* First screen position fix */
+.acx-illustration-one {
+  right: calc(var(--visual-offset-right) + 6px) !important;
+  bottom: 72px !important;
+  width: min(340px, 26vw) !important;
+  height: min(286px, 35vh) !important;
+}
+
+/* Screen 1: reduce main merchant console */
+.acx-payment-hub {
+  left: 18% !important;
+  top: 11% !important;
+  width: 232px !important;
+  min-height: 184px !important;
+  padding: 14px !important;
+  border-radius: 22px !important;
+}
+
+.acx-hub-top {
+  gap: 7px !important;
+  font-size: 0.64rem !important;
+}
+
+.hub-dot,
+.command-pulse {
+  width: 7px !important;
+  height: 7px !important;
+  box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.12) !important;
+}
+
+.acx-hub-amount {
+  margin-top: 14px !important;
+  padding: 12px !important;
+  border-radius: 16px !important;
+}
+
+.acx-hub-amount small {
+  font-size: 0.6rem !important;
+}
+
+.acx-hub-amount strong {
+  margin-top: 4px !important;
+  font-size: 1.48rem !important;
+}
+
+.acx-hub-flow {
+  gap: 6px !important;
+  margin-top: 12px !important;
+}
+
+.acx-hub-flow span {
+  font-size: 0.56rem !important;
+}
+
+.acx-hub-bars {
+  gap: 7px !important;
+  height: 38px !important;
+  margin-top: 13px !important;
+}
+
+/* Screen 1: reduce POS device */
+.acx-pos-device {
+  right: 2% !important;
+  bottom: 8% !important;
+  width: 108px !important;
+  height: 148px !important;
+  padding: 11px !important;
+  border-radius: 24px !important;
+}
+
+.acx-pos-screen {
+  height: 78px !important;
+  border-radius: 18px !important;
+}
+
+.acx-pos-screen i {
+  font-size: 1.28rem !important;
+}
+
+.acx-pos-screen span {
+  font-size: 0.56rem !important;
+}
+
+.acx-pos-keys {
+  gap: 6px !important;
+  margin-top: 10px !important;
+}
+
+.acx-pos-keys i {
+  height: 14px !important;
+  border-radius: 6px !important;
+}
+
+/* Chips: smaller and cleaner */
+.acx-premium-chip,
+.acx-mini-widget {
+  padding: 8px 11px !important;
+  font-size: 0.64rem !important;
+  border-radius: 999px !important;
+}
+
+.chip-approved {
+  left: 2% !important;
+  bottom: 19% !important;
+}
+
+.chip-risk {
+  right: 0 !important;
+  top: 5% !important;
+}
+
+.chip-settle {
+  left: 25% !important;
+  bottom: 0 !important;
+}
+
+/* Screen 2: reduce onboarding board */
+.acx-onboarding-board {
+  left: 12% !important;
+  top: 12% !important;
+  width: 268px !important;
+  padding: 16px !important;
+  border-radius: 22px !important;
+}
+
+.board-header,
+.command-title {
+  gap: 8px !important;
+  font-size: 0.66rem !important;
+}
+
+.board-header span {
+  width: 8px !important;
+  height: 8px !important;
+  box-shadow: 0 0 0 6px rgba(37,99,235,0.11) !important;
+}
+
+.merchant-profile-row {
+  gap: 10px !important;
+  margin-top: 15px !important;
+  padding: 11px !important;
+  border-radius: 16px !important;
+}
+
+.merchant-avatar {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 13px !important;
+}
+
+.merchant-profile-row strong {
+  font-size: 0.76rem !important;
+}
+
+.merchant-profile-row small {
+  font-size: 0.6rem !important;
+}
+
+.kyc-check-list {
+  gap: 8px !important;
+  margin-top: 13px !important;
+}
+
+.kyc-check-list div {
+  gap: 7px !important;
+  padding: 8px 10px !important;
+  border-radius: 12px !important;
+  font-size: 0.67rem !important;
+}
+
+.widget-one {
+  right: 1% !important;
+  top: 23px !important;
+}
+
+.widget-two {
+  left: 6% !important;
+  bottom: 28px !important;
+}
+
+.route-line-one {
+  left: 28% !important;
+  bottom: 22% !important;
+  width: 175px !important;
+}
+
+/* Screen 3: reduce command card */
+.acx-command-card {
+  left: 10% !important;
+  top: 10% !important;
+  width: 280px !important;
+  padding: 16px !important;
+  border-radius: 23px !important;
+}
+
+.command-chart {
+  gap: 9px !important;
+  height: 90px !important;
+  margin-top: 15px !important;
+  padding: 13px !important;
+  border-radius: 17px !important;
+}
+
+.command-row {
+  gap: 12px !important;
+  margin-top: 9px !important;
+  padding: 9px 11px !important;
+  border-radius: 13px !important;
+}
+
+.command-row span {
+  font-size: 0.64rem !important;
+}
+
+.command-row strong {
+  font-size: 0.66rem !important;
+}
+
+.acx-ring-widget {
+  right: 3% !important;
+  top: 8% !important;
+  width: 76px !important;
+  height: 76px !important;
+  font-size: 1rem !important;
+}
+
+.widget-three {
+  right: 2% !important;
+  bottom: 18% !important;
+}
+
+.widget-four {
+  left: 6% !important;
+  bottom: 20% !important;
+}
+
+/* Keep cards right and compact on medium laptops */
+@media (min-width: 992px) and (max-width: 1300px) {
+  .acx-auth-slider {
+    --visual-offset-right: 36vw;
+  }
+
+  .acx-video-illustration,
+  .acx-flat-illustration,
+  .acx-analytics-illustration,
+  .acx-illustration-one {
+    width: min(300px, 25vw) !important;
+    height: 260px !important;
+  }
+
+  .acx-payment-hub {
+    width: 210px !important;
+    min-height: 172px !important;
+  }
+
+  .acx-pos-device {
+    width: 96px !important;
+    height: 136px !important;
+  }
+
+  .acx-onboarding-board {
+    width: 240px !important;
+  }
+
+  .acx-command-card {
+    width: 248px !important;
+  }
+
+  .acx-ring-widget {
+    width: 68px !important;
+    height: 68px !important;
+  }
+}
+
+/* Short height compression */
+@media (min-width: 992px) and (max-height: 760px) {
+  .acx-video-illustration,
+  .acx-flat-illustration,
+  .acx-analytics-illustration,
+  .acx-illustration-one {
+    bottom: 52px !important;
+    height: 238px !important;
+  }
+
+  .acx-payment-hub {
+    top: 5% !important;
+    min-height: 162px !important;
+  }
+
+  .acx-hub-amount strong {
+    font-size: 1.25rem !important;
+  }
+
+  .acx-pos-device {
+    bottom: 2% !important;
+  }
+}
+
+/* ===========================================================
+   FINAL WIDGET-BESIDE-CARD POSITIONING
+   Paste this at the END of login.scss.
+   Purpose:
+   - Main cards stay centered inside each visual group.
+   - Small widgets sit beside the cards, not above/inside them.
+   - Clear controls are available through CSS variables.
+   =========================================================== */
+
+.acx-auth-slider {
+  /*
+    Move the whole illustration group:
+    36vw = more right
+    38vw = current balanced
+    40vw = slightly left
+  */
+  --visual-offset-right: 36vw;
+
+  /*
+    Scale all illustration widgets/cards:
+    0.88 = smaller
+    0.94 = current
+    1 = original/bigger
+  */
+  --visual-scale: 1;
+
+  /*
+    Gap between main card and side widgets:
+    8px  = closer
+    16px = current
+    24px = farther
+  */
+  --side-widget-gap: 8px;
+}
+
+/* Remove the old slide indicator dots fully */
+.acx-slider-dots {
+  display: none !important;
+}
+
+/* Visual stage: cards move together */
+.acx-video-illustration,
+.acx-flat-illustration,
+.acx-analytics-illustration {
+  right: calc(var(--visual-offset-right) + 10px) !important;
+  width: min(360px, 27vw) !important;
+  height: min(300px, 37vh) !important;
+  transform: scale(var(--visual-scale));
+  transform-origin: center right;
+  overflow: visible !important;
+}
+
+/* =========================
+   SCREEN 1 — Payment widgets
+   Main card: Merchant Live Console
+   Widgets: right/left side of that card
+   ========================= */
+
+.acx-illustration-one {
+  right: calc(var(--visual-offset-right) + 4px) !important;
+  bottom: 70px !important;
+}
+
+/* Main merchant card */
+.acx-payment-hub {
+  left: 50% !important;
+  top: 50% !important;
+  width: 232px !important;
+  min-height: 184px !important;
+  transform: translate(-50%, -50%) rotate(-2deg) !important;
+  z-index: 4 !important;
+  animation: acx-payment-hub-float 5s ease-in-out infinite !important;
+}
+
+@keyframes acx-payment-hub-float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) translateY(-10px) rotate(-2deg);
+  }
+}
+
+/* POS card beside the main card, right side */
+.acx-pos-device {
+  left: calc(50% + 116px + var(--side-widget-gap)) !important;
+  right: auto !important;
+  top: 54% !important;
+  bottom: auto !important;
+  width: 104px !important;
+  height: 142px !important;
+  transform: translateY(-50%) rotate(4deg) !important;
+  z-index: 5 !important;
+  animation: acx-side-widget-float-right 5.4s ease-in-out infinite -0.8s !important;
+}
+
+/* Payment Approved widget beside left side */
+.chip-approved {
+  left: auto !important;
+  right: calc(50% + 116px + var(--side-widget-gap)) !important;
+  top: 27% !important;
+  bottom: auto !important;
+  transform: none !important;
+  z-index: 6 !important;
+}
+
+/* Risk widget above-right beside POS */
+.chip-risk {
+  left: calc(50% + 116px + var(--side-widget-gap)) !important;
+  right: auto !important;
+  top: 12% !important;
+  bottom: auto !important;
+  z-index: 6 !important;
+}
+
+/* Settlement widget below-left beside main card */
+.chip-settle {
+  left: auto !important;
+  right: calc(50% + 80px) !important;
+  bottom: 4% !important;
+  top: auto !important;
+  z-index: 6 !important;
+}
+
+/* Side widget float animations */
+.acx-premium-chip {
+  animation: acx-side-chip-float 4.8s ease-in-out infinite !important;
+}
+
+.chip-risk {
+  animation-delay: -1s !important;
+}
+
+.chip-settle {
+  animation-delay: -2s !important;
+}
+
+@keyframes acx-side-widget-float-right {
+  0%,
+  100% {
+    transform: translateY(-50%) translateX(0) rotate(4deg);
+  }
+
+  50% {
+    transform: translateY(-50%) translateX(6px) translateY(-8px) rotate(4deg);
+  }
+}
+
+@keyframes acx-side-chip-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(6px, -8px, 18px);
+  }
+}
+
+/* =========================
+   SCREEN 2 — Onboarding widgets
+   Main card center, mini widgets beside it
+   ========================= */
+
+.acx-flat-illustration {
+  right: calc(var(--visual-offset-right) + 10px) !important;
+}
+
+/* Main onboarding card centered */
+.acx-onboarding-board {
+  left: 50% !important;
+  top: 50% !important;
+  width: 268px !important;
+  transform: translate(-50%, -50%) rotate(-2deg) !important;
+  z-index: 4 !important;
+  animation: acx-onboarding-board-float 5s ease-in-out infinite !important;
+}
+
+@keyframes acx-onboarding-board-float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) translateY(-10px) rotate(-2deg);
+  }
+}
+
+/* KYC widget beside right side of board */
+.widget-one {
+  left: calc(50% + 134px + var(--side-widget-gap)) !important;
+  right: auto !important;
+  top: 24% !important;
+  bottom: auto !important;
+  z-index: 6 !important;
+}
+
+/* Docs widget beside left-bottom of board */
+.widget-two {
+  left: auto !important;
+  right: calc(50% + 110px) !important;
+  bottom: 18% !important;
+  top: auto !important;
+  z-index: 6 !important;
+}
+
+/* Flow line behind widgets, not crossing main board */
+.route-line-one {
+  left: calc(50% + 50px) !important;
+  bottom: 24% !important;
+  width: 155px !important;
+  z-index: 1 !important;
+}
+
+/* =========================
+   SCREEN 3 — Settlement widgets
+   Main card center, widgets beside it
+   ========================= */
+
+.acx-analytics-illustration {
+  right: calc(var(--visual-offset-right) + 10px) !important;
+}
+
+/* Main settlement command card centered */
+.acx-command-card {
+  left: 50% !important;
+  top: 50% !important;
+  width: 280px !important;
+  transform: translate(-50%, -50%) rotate(-2deg) !important;
+  z-index: 4 !important;
+  animation: acx-command-card-float 5.2s ease-in-out infinite !important;
+}
+
+@keyframes acx-command-card-float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) translateY(-10px) rotate(-2deg);
+  }
+}
+
+/* Ring widget beside right-top of command card */
+.acx-ring-widget {
+  left: calc(50% + 140px + var(--side-widget-gap)) !important;
+  right: auto !important;
+  top: 15% !important;
+  width: 74px !important;
+  height: 74px !important;
+  z-index: 6 !important;
+}
+
+/* Payout widget beside right-bottom */
+.widget-three {
+  left: calc(50% + 125px + var(--side-widget-gap)) !important;
+  right: auto !important;
+  bottom: 18% !important;
+  top: auto !important;
+  z-index: 6 !important;
+}
+
+/* Risk widget beside left-bottom */
+.widget-four {
+  left: auto !important;
+  right: calc(50% + 118px) !important;
+  bottom: 20% !important;
+  top: auto !important;
+  z-index: 6 !important;
+}
+
+/* Common mini widget animation */
+.acx-mini-widget,
+.acx-ring-widget {
+  animation: acx-side-chip-float 4.8s ease-in-out infinite !important;
+}
+
+.widget-two,
+.widget-four {
+  animation-delay: -1.6s !important;
+}
+
+.widget-three {
+  animation-delay: -2.2s !important;
+}
+
+/* Medium laptop adjustments */
+@media (min-width: 992px) and (max-width: 1300px) {
+  .acx-auth-slider {
+    --visual-offset-right: 36vw;
+    --visual-scale: 0.90;
+    --side-widget-gap: 12px;
+  }
+
+  .acx-video-illustration,
+  .acx-flat-illustration,
+  .acx-analytics-illustration {
+    width: min(330px, 25vw) !important;
+    height: 270px !important;
+  }
+}
+
+/* Short height adjustments */
+@media (min-width: 992px) and (max-height: 760px) {
+  .acx-auth-slider {
+    --visual-scale: 0.86;
+  }
+
+  .acx-video-illustration,
+  .acx-flat-illustration,
+  .acx-analytics-illustration {
+    bottom: 48px !important;
+    height: 246px !important;
+  }
+}
+
+/* ===========================================================
+   GUARANTEED REPLAY SIDE FLIP FORM SWITCH
+   Paste this at the END of login.scss.
+
+   Why this version works:
+   - Register mode and Login mode use DIFFERENT animation names.
+   - Both animation names use the SAME side-flip movement.
+   - Because animation-name changes on every click, browser replays it every time.
+
+   Works on:
+   - Register now
+   - Already registered / Log in back
+
+   Backend/TS is untouched.
+   Required HTML:
+   <div
+     class="acx-form-card"
+     [class.acx-form-login-mode]="authMode() === 'login'"
+     [class.acx-form-register-mode]="authMode() === 'register'"
+   >
+   =========================================================== */
+
+.acx-auth-slider {
+  /*
+    Change animation here:
+    0.65s = faster
+    0.9s  = current
+    1.2s  = slower
+  */
+  --form-flip-duration: 0.9s;
+
+  /*
+    Side flip depth:
+    70deg = subtle
+    88deg = current
+    96deg = stronger side fold
+  */
+  --form-flip-angle: 88deg;
+
+  /*
+    Zoom at middle of flip:
+    1.02 = subtle
+    1.05 = current
+    1.09 = stronger
+  */
+  --form-flip-scale: 1.05;
+}
+
+.acx-form-stage {
+  perspective: 1700px !important;
+  transform-style: preserve-3d !important;
+}
+
+/* Base readable state */
+.acx-form-card {
+  transform-origin: center center !important;
+  transform-style: preserve-3d !important;
+  backface-visibility: visible !important;
+  will-change: transform, opacity, filter, box-shadow;
+  overflow: hidden !important;
+
+  transform:
+    perspective(1700px)
+    rotateY(0deg)
+    translateX(0)
+    translateZ(0)
+    scale(1) !important;
+}
+
+/* IMPORTANT:
+   Different animation names force replay on every mode switch.
+   Same visual movement is used in both keyframes.
+*/
+.acx-form-card.acx-form-register-mode {
+  animation:
+    acx-side-flip-to-register var(--form-flip-duration) cubic-bezier(0.22, 1, 0.36, 1) 1 both !important;
+}
+
+.acx-form-card.acx-form-login-mode {
+  animation:
+    acx-side-flip-to-login var(--form-flip-duration) cubic-bezier(0.22, 1, 0.36, 1) 1 both !important;
+}
+
+/* Keep final form readable */
+.acx-form-card > * {
+  position: relative;
+  z-index: 2;
+  transform: none !important;
+  backface-visibility: visible !important;
+}
+
+/* Side edge visible only during flip */
+.acx-form-card::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  right: -8px;
+  width: 20px;
+  z-index: 1;
+  border-radius: 0 18px 18px 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,0.10),
+      rgba(37,99,235,0.22),
+      rgba(15,23,42,0.14)
+    );
+}
+
+/* Premium sheen during flip */
+.acx-form-card::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  z-index: 20;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  background:
+    linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255,255,255,0.14) 32%,
+      rgba(255,255,255,0.86) 50%,
+      rgba(37,99,235,0.13) 68%,
+      transparent 100%
+    );
+  transform: translateX(-120%) skewX(-12deg);
+}
+
+.acx-form-card.acx-form-register-mode::before {
+  animation: acx-side-edge-register var(--form-flip-duration) ease 1 both !important;
+}
+
+.acx-form-card.acx-form-login-mode::before {
+  animation: acx-side-edge-login var(--form-flip-duration) ease 1 both !important;
+}
+
+.acx-form-card.acx-form-register-mode::after {
+  animation: acx-side-sheen-register var(--form-flip-duration) ease 1 both !important;
+}
+
+.acx-form-card.acx-form-login-mode::after {
+  animation: acx-side-sheen-login var(--form-flip-duration) ease 1 both !important;
+}
+
+/* Form content reveal */
+.acx-form-card form,
+.acx-form-card .acx-form-title,
+.acx-form-card .acx-form-sub {
+  animation: acx-form-content-readable-in 0.34s ease 0.35s both !important;
+}
+
+/* Same visual movement: Login -> Register */
+@keyframes acx-side-flip-to-register {
+  0% {
+    transform:
+      perspective(1700px)
+      rotateY(0deg)
+      translateX(0)
+      translateZ(0)
+      scale(1);
+    filter: blur(0);
+  }
+
+  42% {
+    transform:
+      perspective(1700px)
+      rotateY(calc(var(--form-flip-angle) * -1))
+      translateX(-20px)
+      translateZ(42px)
+      scale(var(--form-flip-scale));
+    filter: blur(0.8px);
+    box-shadow:
+      0 36px 92px rgba(15, 23, 42, 0.22),
+      0 18px 46px rgba(37, 99, 235, 0.14);
+  }
+
+  58% {
+    transform:
+      perspective(1700px)
+      rotateY(calc(var(--form-flip-angle) * -1))
+      translateX(-20px)
+      translateZ(42px)
+      scale(var(--form-flip-scale));
+    filter: blur(0.8px);
+  }
+
+  100% {
+    transform:
+      perspective(1700px)
+      rotateY(0deg)
+      translateX(0)
+      translateZ(0)
+      scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Same visual movement: Register -> Login */
+@keyframes acx-side-flip-to-login {
+  0% {
+    transform:
+      perspective(1700px)
+      rotateY(0deg)
+      translateX(0)
+      translateZ(0)
+      scale(1);
+    filter: blur(0);
+  }
+
+  42% {
+    transform:
+      perspective(1700px)
+      rotateY(calc(var(--form-flip-angle) * -1))
+      translateX(-20px)
+      translateZ(42px)
+      scale(var(--form-flip-scale));
+    filter: blur(0.8px);
+    box-shadow:
+      0 36px 92px rgba(15, 23, 42, 0.22),
+      0 18px 46px rgba(37, 99, 235, 0.14);
+  }
+
+  58% {
+    transform:
+      perspective(1700px)
+      rotateY(calc(var(--form-flip-angle) * -1))
+      translateX(-20px)
+      translateZ(42px)
+      scale(var(--form-flip-scale));
+    filter: blur(0.8px);
+  }
+
+  100% {
+    transform:
+      perspective(1700px)
+      rotateY(0deg)
+      translateX(0)
+      translateZ(0)
+      scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Separate edge/sheens force replay too */
+@keyframes acx-side-edge-register {
+  0%, 100% { opacity: 0; }
+  35%, 65% { opacity: 1; }
+}
+
+@keyframes acx-side-edge-login {
+  0%, 100% { opacity: 0; }
+  35%, 65% { opacity: 1; }
+}
+
+@keyframes acx-side-sheen-register {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%) skewX(-12deg);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0.85;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(120%) skewX(-12deg);
+  }
+}
+
+@keyframes acx-side-sheen-login {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%) skewX(-12deg);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0.85;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(120%) skewX(-12deg);
+  }
+}
+
+@keyframes acx-form-content-readable-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+    filter: blur(0.8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Mobile: lighter but still replayed with different names */
+@media (max-width: 767.98px) {
+  .acx-form-stage {
+    perspective: none !important;
+  }
+
+  .acx-form-card.acx-form-register-mode {
+    animation: acx-mobile-switch-register 0.34s ease 1 both !important;
+  }
+
+  .acx-form-card.acx-form-login-mode {
+    animation: acx-mobile-switch-login 0.34s ease 1 both !important;
+  }
+
+  .acx-form-card::before,
+  .acx-form-card::after {
+    display: none !important;
+  }
+
+  @keyframes acx-mobile-switch-register {
+    from {
+      opacity: 0;
+      transform: translateX(14px) scale(0.985);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  @keyframes acx-mobile-switch-login {
+    from {
+      opacity: 0;
+      transform: translateX(14px) scale(0.985);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acx-form-card,
+  .acx-form-card.acx-form-register-mode,
+  .acx-form-card.acx-form-login-mode,
+  .acx-form-card::before,
+  .acx-form-card::after,
+  .acx-form-card form,
+  .acx-form-card .acx-form-title,
+  .acx-form-card .acx-form-sub {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===========================================================
+   MAKE ALL SLIDER SCREENS LIKE FIRST SCREEN
+   All screens now use the same dark blue/cyan background and
+   white premium text styling as Screen 1.
+   Paste at the END of login.scss.
+   =========================================================== */
+
+/* Same dark-blue premium background for every slider screen */
+.acx-screen-one,
+.acx-screen-two,
+.acx-screen-three {
+  color: #ffffff !important;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(49, 211, 255, 0.34), transparent 28%),
+    radial-gradient(circle at 66% 56%, rgba(27, 107, 255, 0.38), transparent 36%),
+    linear-gradient(135deg, #081946 0%, #0c3376 44%, #109ac7 100%) !important;
+}
+
+/* Same deep cinematic overlay feel on every screen */
+.acx-screen-one::before,
+.acx-screen-two::before,
+.acx-screen-three::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 8% 82%, rgba(32, 214, 255, 0.18), transparent 32%),
+    linear-gradient(90deg, rgba(4, 13, 42, 0.08), rgba(4, 13, 42, 0.16));
+}
+
+/* Keep the bottom wave same on every screen */
+.acx-screen-one::after,
+.acx-screen-two::after,
+.acx-screen-three::after {
+  background: linear-gradient(90deg, #1d4ed8 0%, #0ea5e9 58%, #22d3ee 100%) !important;
+  opacity: 0.96 !important;
+}
+
+/* Brand should be white on all screens */
+.acx-screen-two .acx-logo-badge,
+.acx-screen-three .acx-logo-badge,
+.acx-screen-two .acx-brand-mark,
+.acx-screen-three .acx-brand-mark {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.14) !important;
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255,255,255,0.28) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+.acx-screen-two .acx-company,
+.acx-screen-three .acx-company,
+.acx-screen-two .acx-product-name,
+.acx-screen-three .acx-product-name {
+  color: rgba(255, 255, 255, 0.68) !important;
+}
+
+.acx-screen-two .acx-product-name,
+.acx-screen-three .acx-product-name {
+  color: #ffffff !important;
+}
+
+/* Make slide 2 and slide 3 copy exactly feel like first screen */
+.acx-screen-two .acx-feature-copy,
+.acx-screen-three .acx-feature-copy {
+  align-self: center !important;
+  max-width: min(650px, 46vw) !important;
+  transform: translateY(-8px) !important;
+  z-index: 8 !important;
+}
+
+/* Add first-screen style label before light screen headings */
+.acx-screen-two .acx-feature-copy::before,
+.acx-screen-three .acx-feature-copy::before {
+  display: inline-flex;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.82);
+  border: 1px solid rgba(255,255,255,0.20);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px);
+  margin-bottom: 22px;
+}
+
+.acx-screen-two .acx-feature-copy::before {
+  content: "AcquirerX Secure Access";
+}
+
+.acx-screen-three .acx-feature-copy::before {
+  content: "AcquirerX Secure Access";
+}
+
+/* Heading style same as first screen */
+.acx-screen-two .acx-feature-copy h2,
+.acx-screen-three .acx-feature-copy h2 {
+  margin: 0 0 18px !important;
+  max-width: 620px !important;
+  color: #ffffff !important;
+  font-size: clamp(2.25rem, 4.35vw, 4.85rem) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.085em !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+}
+
+/* Paragraph style same as first screen */
+.acx-screen-two .acx-feature-copy p,
+.acx-screen-three .acx-feature-copy p {
+  max-width: 500px !important;
+  margin: 0 !important;
+  color: rgba(255,255,255,0.78) !important;
+  font-size: clamp(0.92rem, 1.1vw, 1.1rem) !important;
+  line-height: 1.72 !important;
+  font-weight: 520 !important;
+}
+
+/* Feature list pills should match the dark screen */
+.acx-screen-two .acx-feature-list,
+.acx-screen-three .acx-feature-list {
+  margin-top: 24px !important;
+}
+
+.acx-screen-two .acx-feature-list div,
+.acx-screen-three .acx-feature-list div {
+  color: rgba(255,255,255,0.88) !important;
+  background: rgba(255,255,255,0.14) !important;
+  border: 1px solid rgba(255,255,255,0.20) !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12) !important;
+  backdrop-filter: blur(14px) !important;
+}
+
+.acx-screen-two .acx-feature-list i,
+.acx-screen-three .acx-feature-list i {
+  color: #22d3ee !important;
+}
+
+/* If section numbers are ever enabled again, make them fit dark theme */
+.acx-screen-two .acx-section-number,
+.acx-screen-three .acx-section-number {
+  color: #ffffff !important;
+  background: rgba(255,255,255,0.14) !important;
+  border: 1px solid rgba(255,255,255,0.20) !important;
+}
+
+/* Make cards slightly brighter so they pop on dark background */
+.acx-screen-two .acx-onboarding-board,
+.acx-screen-three .acx-command-card,
+.acx-screen-two .acx-mini-widget,
+.acx-screen-three .acx-mini-widget,
+.acx-screen-three .acx-ring-widget {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.96), rgba(232,247,255,0.88)) !important;
+  border: 1px solid rgba(255,255,255,0.88) !important;
+  box-shadow:
+    0 28px 70px rgba(0, 18, 58, 0.28),
+    0 10px 26px rgba(2, 26, 73, 0.16),
+    inset 0 1px 0 rgba(255,255,255,0.98) !important;
+}
+
+/* Keep responsive laptop text consistent */
+@media (min-width: 992px) and (max-width: 1300px) {
+  .acx-screen-two .acx-feature-copy,
+  .acx-screen-three .acx-feature-copy {
+    max-width: 45vw !important;
+  }
+
+  .acx-screen-two .acx-feature-copy h2,
+  .acx-screen-three .acx-feature-copy h2 {
+    font-size: clamp(2rem, 4vw, 3.9rem) !important;
+  }
+}
+
+/* Mobile already hides slider, keep form background clean */
+@media (max-width: 991.98px) {
+  .acx-auth-slider {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(186,230,253,0.55), transparent 35%),
+      linear-gradient(180deg, #ffffff, #eef7ff) !important;
+  }
+}
