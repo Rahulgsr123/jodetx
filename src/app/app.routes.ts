@@ -10,6 +10,9 @@ import { Login3 } from './login3/login3';
 import { Login4 } from './login4/login4';
 import { Login5 } from './login5/login5';
 import { Login6 } from './login6/login6';
+import { Mbank } from './mbank/mbank';
+import { BharatBank } from './bharat-bank/bharat-bank';
+import { Jodetx } from './jodetx/jodetx';
 
 export const routes: Routes = [
   {
@@ -23,6 +26,18 @@ export const routes: Routes = [
   {
     path: 'login5',
     component: Login5,
+  },
+  {
+    path: 'mbank',
+    component: Mbank,
+  },
+  {
+    path: 'bharat',
+    component: BharatBank,
+  },
+  {
+    path: 'jodetx',
+    component: Jodetx,
   },
   {
     path: 'login6',

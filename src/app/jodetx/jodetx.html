@@ -1,23 +1,25 @@
 <section class="acx-shell acx-entry-login">
   <div class="acx-login-experience">
-
     <!-- ══════════════════════════════════════
          LEFT VISUAL PANEL
     ══════════════════════════════════════ -->
     <div class="acx-visual-panel">
-
       <!-- Brand lockup: AquirerX logo + tagline -->
       <div class="acx-brand-lockup">
         <div class="acx-brand-name-wrap">
-          <div class="acx-brand-wordmark">
-            Aquirer<span class="acx-x-char">X</span>
-          </div>
+          <div class="acx-brand-wordmark">Jodet<span class="acx-x-char">x</span></div>
           <div class="acx-brand-tagline">Financial Infrastructure. Simplified.</div>
         </div>
       </div>
 
       <!-- Curved connecting line SVG (sits behind cards) -->
-      <svg class="acx-connecting-line" viewBox="0 0 600 700" fill="none" preserveAspectRatio="none" aria-hidden="true">
+      <svg
+        class="acx-connecting-line"
+        viewBox="0 0 600 700"
+        fill="none"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
         <path
           d="M 360 120 Q 380 170 340 200 Q 300 230 320 280 Q 340 330 300 370 Q 260 410 280 460 Q 300 510 260 550"
           stroke="rgba(147,197,253,0.5)"
@@ -30,17 +32,16 @@
       <!-- Hero copy -->
       <div class="acx-hero-copy">
         <h1 class="acx-headline">
-          One Platform.<br>
-          Total <span class="acx-headline-highlight">Financial Control.</span>
+          One Core.<br />
+          Total <span class="acx-headline-highlight">Financial Intelligence.</span>
         </h1>
         <p class="acx-hero-desc">
-          AcquirerX brings payments, banking, reconciliation,<br>
-          and <strong>partner operations</strong> into one intelligent<br>
-          financial infrastructure layer.
+          Jodetx unifies payments, banking, reconciliation, settlements, and business operations
+          into one secure financial infrastructure ecosystem.
         </p>
         <p class="acx-hero-desc">
-          Built for fast onboarding, secure transactions,<br>
-          and <strong>enterprise-grade financial control.</strong>
+          Built for modern businesses that need speed, control, automation, and enterprise-grade
+          reliability.
         </p>
       </div>
 
@@ -50,15 +51,20 @@
           <div class="acx-pedestal-layer acx-pedestal-layer-1"></div>
           <div class="acx-pedestal-layer acx-pedestal-layer-2"></div>
         </div>
-        <svg class="acx-shield-svg" viewBox="0 0 110 118" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          class="acx-shield-svg"
+          viewBox="0 0 110 118"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <defs>
             <linearGradient id="shieldGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="rgba(255,255,255,0.88)"/>
-              <stop offset="100%" stop-color="rgba(219,234,254,0.72)"/>
+              <stop offset="0%" stop-color="rgba(255,255,255,0.88)" />
+              <stop offset="100%" stop-color="rgba(219,234,254,0.72)" />
             </linearGradient>
             <linearGradient id="lockGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#60a5fa"/>
-              <stop offset="100%" stop-color="#2563eb"/>
+              <stop offset="0%" stop-color="#60a5fa" />
+              <stop offset="100%" stop-color="#2563eb" />
             </linearGradient>
           </defs>
           <path
@@ -80,9 +86,9 @@
             stroke-linecap="round"
             fill="none"
           />
-          <rect x="37" y="52" width="36" height="26" rx="6" fill="url(#lockGrad)" opacity="0.92"/>
-          <circle cx="55" cy="62" r="4" fill="white" opacity="0.9"/>
-          <rect x="53" y="62" width="4" height="7" rx="1.5" fill="white" opacity="0.9"/>
+          <rect x="37" y="52" width="36" height="26" rx="6" fill="url(#lockGrad)" opacity="0.92" />
+          <circle cx="55" cy="62" r="4" fill="white" opacity="0.9" />
+          <rect x="53" y="62" width="4" height="7" rx="1.5" fill="white" opacity="0.9" />
         </svg>
       </div>
 
@@ -127,15 +133,17 @@
           <span class="acx-trust-icon"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
           <div>
             <div class="acx-trust-title">Secure</div>
-            <div class="acx-trust-sub">PCI DSS Ready</div>
+            <div class="acx-trust-sub">Protected Login</div>
           </div>
         </div>
         <div class="acx-trust-divider" aria-hidden="true"></div>
         <div class="acx-trust-item">
-          <span class="acx-trust-icon"><i class="bi bi-lightning-charge" aria-hidden="true"></i></span>
+          <span class="acx-trust-icon"
+            ><i class="bi bi-lightning-charge" aria-hidden="true"></i
+          ></span>
           <div>
-            <div class="acx-trust-title">Fast</div>
-            <div class="acx-trust-sub">Real-time Processing</div>
+            <div class="acx-trust-title">Unified</div>
+            <div class="acx-trust-sub">One Core Platform</div>
           </div>
         </div>
         <div class="acx-trust-divider" aria-hidden="true"></div>
@@ -154,7 +162,6 @@
     ══════════════════════════════════════ -->
     <div class="acx-form-panel">
       <div class="acx-form-card" [class.acx-card-flipped]="authMode() === 'register'">
-
         <!--
           acx-form-card-scroll wraps ALL of the card's content.
           The CARD ITSELF (this outer element) never scrolls and
@@ -165,7 +172,6 @@
           shadow stay perfectly still.
         -->
         <div class="acx-form-card-scroll">
-
           <!-- Card logo -->
           <div class="acx-card-logo-box">
             <img
@@ -196,14 +202,17 @@
           <!-- ── LOGIN FORM ── -->
           @if (authMode() === 'login') {
             <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" novalidate>
-
               <!-- Phone -->
               <div class="mb-3">
                 <label for="acx-phone-login" class="acx-form-label">
                   {{ currentForm().fields['phone'].label }}
                 </label>
                 <div class="acx-input-group">
-                  <i class="bi acx-input-icon" [ngClass]="currentForm().fields['phone'].icon" aria-hidden="true"></i>
+                  <i
+                    class="bi acx-input-icon"
+                    [ngClass]="currentForm().fields['phone'].icon"
+                    aria-hidden="true"
+                  ></i>
                   <input
                     id="acx-phone-login"
                     type="tel"
@@ -278,7 +287,11 @@
                 @if (currentForm().secondary) {
                   @for (secondary of currentForm().secondary; track secondary.action) {
                     @if (secondary.action === 'forgot') {
-                      <button type="button" class="acx-forgot-btn" (click)="handleSecondaryAction(secondary.action)">
+                      <button
+                        type="button"
+                        class="acx-forgot-btn"
+                        (click)="handleSecondaryAction(secondary.action)"
+                      >
                         Forgot password?
                       </button>
                     }
@@ -308,7 +321,11 @@
                   @for (secondary of currentForm().secondary; track secondary.action) {
                     @if (secondary.action === 'register') {
                       <span class="acx-muted-text">New to {{ pageData.brand.product }}?&nbsp;</span>
-                      <button type="button" class="acx-link-btn" (click)="handleSecondaryAction(secondary.action)">
+                      <button
+                        type="button"
+                        class="acx-link-btn"
+                        (click)="handleSecondaryAction(secondary.action)"
+                      >
                         Register now
                       </button>
                     }
@@ -326,7 +343,11 @@
                   {{ currentForm().fields['phone'].label }}
                 </label>
                 <div class="acx-input-group">
-                  <i class="bi acx-input-icon" [ngClass]="currentForm().fields['phone'].icon" aria-hidden="true"></i>
+                  <i
+                    class="bi acx-input-icon"
+                    [ngClass]="currentForm().fields['phone'].icon"
+                    aria-hidden="true"
+                  ></i>
                   <input
                     id="acx-phone-register"
                     type="tel"
@@ -442,7 +463,6 @@
           <!-- ── REGISTER: PIN STEP ── -->
           @if (authMode() === 'register' && registerStep() === 'pin') {
             <form [formGroup]="pinForm" (ngSubmit)="completeRegistration()" novalidate>
-
               <!-- Create PIN — digit boxes -->
               <div class="mb-3">
                 <label class="acx-form-label">
@@ -511,7 +531,9 @@
                         [attr.aria-label]="'Confirm PIN digit ' + (d + 1)"
                         [attr.aria-invalid]="!!getConfirmPinError()"
                         (input)="onDigitInput($event, d, 'confirmPin', 'pin', confirmPinContainer)"
-                        (keydown)="onDigitKeydown($event, d, 'confirmPin', 'pin', confirmPinContainer)"
+                        (keydown)="
+                          onDigitKeydown($event, d, 'confirmPin', 'pin', confirmPinContainer)
+                        "
                         (paste)="onDigitPaste($event, 'confirmPin', 'pin', confirmPinContainer)"
                       />
                     }
@@ -565,13 +587,10 @@
               </div>
             </form>
           }
-
         </div>
         <!-- end acx-form-card-scroll -->
-
       </div>
     </div>
     <!-- end form panel -->
-
   </div>
 </section>
